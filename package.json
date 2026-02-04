@@ -18,8 +18,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "smidja.helloWorld",
-        "title": "Hello World"
+        "command": "smidja.installAgent",
+        "title": "Smidja: Install Agent"
       }
     ],
     "languageModelTools": [

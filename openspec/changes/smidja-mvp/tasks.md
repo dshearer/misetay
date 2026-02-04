@@ -32,10 +32,10 @@
 
 ## 5. Initial Installation Command (Agent Only)
 
-- [ ] 5.1 Create VS Code command "Smidja: Install Agent"
-- [ ] 5.2 Command copies agents/smidja.agent.md to .github/agents/smidja.agent.md
-- [ ] 5.3 Command creates .github/agents/ directory if needed
-- [ ] 5.4 Command shows success message with instructions to test
+- [x] 5.1 Create VS Code command "Smidja: Install Agent"
+- [x] 5.2 Command copies agents/smidja.agent.md to .github/agents/smidja.agent.md
+- [x] 5.3 Command creates .github/agents/ directory if needed
+- [x] 5.4 Command shows success message with instructions to test
 
 ## 6. Planning Skill
 
