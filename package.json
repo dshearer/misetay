@@ -20,6 +20,111 @@
         "command": "smidja.helloWorld",
         "title": "Hello World"
       }
+    ],
+    "languageModelTools": [
+      {
+        "name": "dshearer.smidja/createTask",
+        "displayName": "Create Task",
+        "modelDescription": "Creates a new task with a title, description, and optional status. Returns the task ID.",
+        "userDescription": "Create a task in the task backend",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Short title for the task"
+            },
+            "description": {
+              "type": "string",
+              "description": "Detailed description of the task"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["ready", "in_progress", "committed", "reviewed"],
+              "description": "Initial status of the task (default: ready)"
+            }
+          },
+          "required": ["title", "description"]
+        }
+      },
+      {
+        "name": "dshearer.smidja/updateTask",
+        "displayName": "Update Task",
+        "modelDescription": "Updates fields of an existing task by ID. Can update title, description, status, or branch.",
+        "userDescription": "Update an existing task",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The task ID to update"
+            },
+            "updates": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "New title"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "New description"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["ready", "in_progress", "committed", "reviewed"],
+                  "description": "New status"
+                },
+                "branch": {
+                  "type": "string",
+                  "description": "Git branch associated with this task"
+                }
+              }
+            }
+          },
+          "required": ["id", "updates"]
+        }
+      },
+      {
+        "name": "dshearer.smidja/listTasks",
+        "displayName": "List Tasks",
+        "modelDescription": "Lists all tasks, optionally filtered by status or branch. Returns array of tasks.",
+        "userDescription": "List tasks from the task backend",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["ready", "in_progress", "committed", "reviewed"],
+              "description": "Filter by status"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Filter by git branch"
+            }
+          }
+        }
+      },
+      {
+        "name": "dshearer.smidja/addDependency",
+        "displayName": "Add Task Dependency",
+        "modelDescription": "Records that childId task depends on parentId task. Child cannot start until parent is committed.",
+        "userDescription": "Add a dependency between tasks",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "childId": {
+              "type": "string",
+              "description": "The task that has the dependency"
+            },
+            "parentId": {
+              "type": "string",
+              "description": "The task that must be completed first"
+            }
+          },
+          "required": ["childId", "parentId"]
+        }
+      }
     ]
   },
   "scripts": {

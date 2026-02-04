@@ -13,14 +13,14 @@
 
 ## 3. Task Management Tools
 
-- [ ] 3.1 Implement createTask tool (dshearer.smidja/createTask)
-- [ ] 3.2 Implement updateTask tool (dshearer.smidja/updateTask)
-- [ ] 3.3 Implement listTasks tool (dshearer.smidja/listTasks)
-- [ ] 3.4 Implement addDependency tool (dshearer.smidja/addDependency)
-- [ ] 3.5 Create task backend adapter interface
-- [ ] 3.6 Implement Beads CLI adapter (default backend)
-- [ ] 3.7 Register all task tools in extension activation
-- [ ] 3.8 Add tool tests
+- [x] 3.1 Implement createTask tool (dshearer.smidja/createTask)
+- [x] 3.2 Implement updateTask tool (dshearer.smidja/updateTask)
+- [x] 3.3 Implement listTasks tool (dshearer.smidja/listTasks)
+- [x] 3.4 Implement addDependency tool (dshearer.smidja/addDependency)
+- [x] 3.5 Create task backend adapter interface
+- [x] 3.6 Implement Beads CLI adapter (default backend)
+- [x] 3.7 Register all task tools in extension activation
+- [x] 3.8 Add tool tests
 
 ## 4. Agent Definition
 
