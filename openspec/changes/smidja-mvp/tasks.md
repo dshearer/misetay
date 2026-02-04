@@ -24,16 +24,15 @@
 
 ## 4. Agent Definition
 
-- [ ] 4.1 Create .github/agents/smidja.agent.md with YAML frontmatter
+- [ ] 4.1 Create agents/smidja.agent.md with YAML frontmatter
 - [ ] 4.2 Declare built-in tools (edit, read, search, todo, shell)
 - [ ] 4.3 Declare Beatrice tools (beatrice_openFile, beatrice_highlightLines, beatrice_navigateToLine)
 - [ ] 4.4 Declare custom tools (dshearer.smidja/createTask, updateTask, listTasks, addDependency)
 - [ ] 4.5 Write bare-bones agent prompt covering planning, execution, and review phases
-- [ ] 4.6 Add command to install agent to workspace
 
 ## 5. Planning Skill
 
-- [ ] 5.1 Create .github/skills/planning/SKILL.md
+- [ ] 5.1 Create skills/planning/SKILL.md
 - [ ] 5.2 Define planning dialogue instructions
 - [ ] 5.3 Add task breakdown guidance
 - [ ] 5.4 Add task creation instructions using createTask/addDependency tools
@@ -41,7 +40,7 @@
 
 ## 6. Execution Skill
 
-- [ ] 6.1 Create .github/skills/execution/SKILL.md
+- [ ] 6.1 Create skills/execution/SKILL.md
 - [ ] 6.2 Add branch creation instructions
 - [ ] 6.3 Define task execution loop (ready → in_progress → edit → commit → committed)
 - [ ] 6.4 Add commit message format: "Title (task-id)"
@@ -49,7 +48,7 @@
 
 ## 7. Review Skill
 
-- [ ] 7.1 Create .github/skills/review/SKILL.md
+- [ ] 7.1 Create skills/review/SKILL.md
 - [ ] 7.2 Add instructions for finding commits (git log --grep)
 - [ ] 7.3 Add instructions for finding affected files
 - [ ] 7.4 Define file-by-file review flow using Beatrice navigation tools
@@ -58,26 +57,34 @@
 
 ## 8. Git Operations Skill
 
-- [ ] 8.1 Create .github/skills/git-ops/SKILL.md
+- [ ] 8.1 Create skills/git-ops/SKILL.md
 - [ ] 8.2 Define branch creation: git checkout -b feature/...
 - [ ] 8.3 Define commit workflow: git add -A, git commit -m "..."
 - [ ] 8.4 Add git log commands for finding commits
 - [ ] 8.5 Add safety checks (don't commit when review fails, etc.)
 
-## 9. Documentation
+## 9. Installation Command
 
-- [ ] 9.1 Write README with quick start
-- [ ] 9.2 Document Beatrice extension requirement
-- [ ] 9.3 Document task backend setup (default: Beads)
-- [ ] 9.4 Document GitHub Copilot requirements
-- [ ] 9.5 Add workflow examples
-- [ ] 9.6 Add troubleshooting guide
+- [ ] 9.1 Create VS Code command "Smidja: Install Agent"
+- [ ] 9.2 Command copies agent definition to .github/agents/
+- [ ] 9.3 Command copies all skill files to .github/skills/
+- [ ] 9.4 Command creates directory structure if needed
+- [ ] 9.5 Command shows success message with next steps
 
-## 10. Testing & Validation
+## 10. Documentation
 
-- [ ] 10.1 Test planning dialogue flow
-- [ ] 10.2 Test task execution creates correct commits
-- [ ] 10.3 Test review flow with approvals
-- [ ] 10.4 Test review flow with change requests
-- [ ] 10.5 Validate task backend integration (Beads)
-- [ ] 10.6 Test Beatrice navigation tools integration
+- [ ] 10.1 Write README with quick start
+- [ ] 10.2 Document Beatrice extension requirement
+- [ ] 10.3 Document task backend setup (default: Beads)
+- [ ] 10.4 Document GitHub Copilot requirements
+- [ ] 10.5 Add workflow examples
+- [ ] 10.6 Add troubleshooting guide
+
+## 11. Testing & Validation
+
+- [ ] 11.1 Test planning dialogue flow
+- [ ] 11.2 Test task execution creates correct commits
+- [ ] 11.3 Test review flow with approvals
+- [ ] 11.4 Test review flow with change requests
+- [ ] 11.5 Validate task backend integration (Beads)
+- [ ] 11.6 Test Beatrice navigation tools integration

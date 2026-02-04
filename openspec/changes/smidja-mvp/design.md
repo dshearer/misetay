@@ -57,6 +57,20 @@ The core intelligence lives in a Copilot agent definition (`.github/agents/smidj
    - Git-backed preferred for persistence and collaboration
 ```
 
+## Initial Setup
+
+Before using Smidja, users must:
+
+1. Install the Smidja extension from VS Code marketplace
+2. Install Beatrice extension (dependency, auto-prompted if missing)
+3. Install task backend (e.g., `brew install beads` for default)
+4. Run command: "Smidja: Install Agent"
+   - Copies agent definition to `.github/agents/smidja.agent.md`
+   - Copies skill files to `.github/skills/`
+   - One command installs everything needed
+
+After installation, chat with `@smidja` to start planning tasks.
+
 ## Workflow Phases
 
 ### 1. Planning
