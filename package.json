@@ -41,11 +41,19 @@
             },
             "status": {
               "type": "string",
-              "enum": ["ready", "in_progress", "committed", "reviewed"],
+              "enum": [
+                "ready",
+                "in_progress",
+                "committed",
+                "reviewed"
+              ],
               "description": "Initial status of the task (default: ready)"
             }
           },
-          "required": ["title", "description"]
+          "required": [
+            "title",
+            "description"
+          ]
         }
       },
       {
@@ -73,7 +81,12 @@
                 },
                 "status": {
                   "type": "string",
-                  "enum": ["ready", "in_progress", "committed", "reviewed"],
+                  "enum": [
+                    "ready",
+                    "in_progress",
+                    "committed",
+                    "reviewed"
+                  ],
                   "description": "New status"
                 },
                 "branch": {
@@ -83,7 +96,10 @@
               }
             }
           },
-          "required": ["id", "updates"]
+          "required": [
+            "id",
+            "updates"
+          ]
         }
       },
       {
@@ -96,7 +112,12 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": ["ready", "in_progress", "committed", "reviewed"],
+              "enum": [
+                "ready",
+                "in_progress",
+                "committed",
+                "reviewed"
+              ],
               "description": "Filter by status"
             },
             "branch": {
@@ -123,7 +144,10 @@
               "description": "The task that must be completed first"
             }
           },
-          "required": ["childId", "parentId"]
+          "required": [
+            "childId",
+            "parentId"
+          ]
         }
       }
     ]
@@ -134,16 +158,18 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "test:fast": "npm run compile && mocha out/test/beadsBackend.test.js --timeout 5000 --ui tdd"
   },
   "devDependencies": {
-    "@types/vscode": "^1.108.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "typescript-eslint": "^8.52.0",
-    "eslint": "^9.39.2",
-    "typescript": "^5.9.3",
+    "@types/vscode": "^1.108.1",
     "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.2",
+    "mocha": "^11.7.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
   }
 }

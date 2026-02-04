@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 
 /**
- * Task status values
+ * Task status values (Smidja workflow statuses)
  */
-export type TaskStatus = 'ready' | 'in_progress' | 'committed' | 'reviewed';
+export type TaskStatus = 'ready' | 'in_progress' | 'blocked' | 'committed' | 'reviewed';
 
 /**
  * Task object returned by backend
@@ -24,7 +24,7 @@ export interface TaskBackend {
 	/**
 	 * Create a new task
 	 */
-	createTask(title: string, description: string, status?: TaskStatus): Promise<Task>;
+	createTask(title: string, description: string, status?: TaskStatus, branch?: string): Promise<Task>;
 
 	/**
 	 * Update an existing task
