@@ -1,8 +1,9 @@
 {
   "name": "smidja",
   "displayName": "Smidja",
+  "publisher": "dshearer",
   "description": "AI coding assistant",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.108.1"
   },
@@ -23,7 +24,7 @@
     ],
     "languageModelTools": [
       {
-        "name": "dshearer.smidja/createTask",
+        "name": "smidja_createTask",
         "displayName": "Create Task",
         "modelDescription": "Creates a new task with a title, description, and optional status. Returns the task ID.",
         "userDescription": "Create a task in the task backend",
@@ -48,7 +49,7 @@
         }
       },
       {
-        "name": "dshearer.smidja/updateTask",
+        "name": "smidja_updateTask",
         "displayName": "Update Task",
         "modelDescription": "Updates fields of an existing task by ID. Can update title, description, status, or branch.",
         "userDescription": "Update an existing task",
@@ -86,7 +87,7 @@
         }
       },
       {
-        "name": "dshearer.smidja/listTasks",
+        "name": "smidja_listTasks",
         "displayName": "List Tasks",
         "modelDescription": "Lists all tasks, optionally filtered by status or branch. Returns array of tasks.",
         "userDescription": "List tasks from the task backend",
@@ -106,7 +107,7 @@
         }
       },
       {
-        "name": "dshearer.smidja/addDependency",
+        "name": "smidja_addDependency",
         "displayName": "Add Task Dependency",
         "modelDescription": "Records that childId task depends on parentId task. Child cannot start until parent is committed.",
         "userDescription": "Add a dependency between tasks",

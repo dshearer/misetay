@@ -6,7 +6,7 @@ import { TaskBackend, Task, TaskStatus } from './taskBackend';
  */
 export function registerTaskTools(context: vscode.ExtensionContext, backend: TaskBackend) {
 	// Register createTask tool
-	const createTaskTool = vscode.lm.registerTool('dshearer.smidja/createTask', {
+	const createTaskTool = vscode.lm.registerTool('smidja_createTask', {
 		async invoke(options, token) {
 			const { title, description, status } = options.input as { 
 				title: string; 
@@ -35,7 +35,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 	});
 
 	// Register updateTask tool
-	const updateTaskTool = vscode.lm.registerTool('dshearer.smidja/updateTask', {
+	const updateTaskTool = vscode.lm.registerTool('smidja_updateTask', {
 		async invoke(options, token) {
 			const { id, updates } = options.input as { 
 				id: string; 
@@ -63,7 +63,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 	});
 
 	// Register listTasks tool
-	const listTasksTool = vscode.lm.registerTool('dshearer.smidja/listTasks', {
+	const listTasksTool = vscode.lm.registerTool('smidja_listTasks', {
 		async invoke(options, token) {
 			const filters = options.input as { status?: TaskStatus; branch?: string } | undefined;
 
@@ -87,7 +87,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 	});
 
 	// Register addDependency tool
-	const addDependencyTool = vscode.lm.registerTool('dshearer.smidja/addDependency', {
+	const addDependencyTool = vscode.lm.registerTool('smidja_addDependency', {
 		async invoke(options, token) {
 			const { childId, parentId } = options.input as { 
 				childId: string; 
