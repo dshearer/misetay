@@ -10,3 +10,5 @@ unit tests as appropriate.
 
 This project uses [OpenSpec specs](../openspec) to document requirements. Treat them
 as the source of truth about how Smidja should behave.
+
+IMPORTANT: Do NOT make tests that are stupid! They need to test real code -- not mock code!
