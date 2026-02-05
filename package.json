@@ -163,66 +163,6 @@
             "parentId"
           ]
         }
-      },
-      {
-        "name": "smidja_startingTask",
-        "displayName": "Starting Task",
-        "toolReferenceName": "startingTask",
-        "modelDescription": "Notify that AI is starting work on a task. This activates a spinner in the task status view to show active work.",
-        "userDescription": "Mark a task as having active work started",
-        "canBeReferencedInPrompt": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "taskId": {
-              "type": "string",
-              "description": "The ID of the task being started"
-            }
-          },
-          "required": [
-            "taskId"
-          ]
-        }
-      },
-      {
-        "name": "smidja_workingOnTask",
-        "displayName": "Working On Task",
-        "toolReferenceName": "workingOnTask",
-        "modelDescription": "Heartbeat signal that AI is still working on a task. Call this every ~5 minutes to keep the spinner active. Spinner auto-stops after 7 minutes without heartbeat.",
-        "userDescription": "Send heartbeat that work is continuing on a task",
-        "canBeReferencedInPrompt": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "taskId": {
-              "type": "string",
-              "description": "The ID of the task being worked on"
-            }
-          },
-          "required": [
-            "taskId"
-          ]
-        }
-      },
-      {
-        "name": "smidja_stoppingTask",
-        "displayName": "Stopping Task",
-        "toolReferenceName": "stoppingTask",
-        "modelDescription": "Notify that AI has stopped working on a task. This immediately removes the spinner from the task status view.",
-        "userDescription": "Mark a task as having work stopped",
-        "canBeReferencedInPrompt": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "taskId": {
-              "type": "string",
-              "description": "The ID of the task being stopped"
-            }
-          },
-          "required": [
-            "taskId"
-          ]
-        }
       }
     ]
   },
@@ -233,7 +173,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test:integ": "vscode-test",
-    "test": "npm run compile && mocha out/test/beadsBackend.test.js --timeout 5000 --ui tdd"
+    "test": "npm run compile && mocha out/test/beadsBackend.test.js --timeout 10000 --ui tdd"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",

@@ -3,12 +3,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { TaskBackend, Task } from './taskBackend';
 
-interface ActiveWork {
-	taskId: string;
-	startTime: number;
-	lastHeartbeat: number;
-}
-
 /**
  * Manages the task status webview panel
  */
@@ -16,14 +10,10 @@ export class TaskStatusView {
 	private panel: vscode.WebviewPanel | undefined;
 	private backend: TaskBackend;
 	private disposables: vscode.Disposable[] = [];
-	private activeWork = new Map<string, ActiveWork>();
-	private heartbeatCheckInterval: NodeJS.Timeout | undefined;
-	private readonly HEARTBEAT_TIMEOUT_MS = 7 * 60 * 1000; // 7 minutes
 	private taskCardTemplate: string;
 
 	constructor(private context: vscode.ExtensionContext, backend: TaskBackend) {
 		this.backend = backend;
-		this.startHeartbeatMonitoring();
 		
 		// Load task card template
 		const templatePath = path.join(this.context.extensionPath, 'webview', 'taskCard.html');
@@ -66,62 +56,6 @@ export class TaskStatusView {
 		);
 
 		await this.refresh();
-	}
-
-	/**
-	 * Mark a task as having active work started
-	 */
-	public startingTask(taskId: string) {
-		const now = Date.now();
-		this.activeWork.set(taskId, {
-			taskId,
-			startTime: now,
-			lastHeartbeat: now
-		});
-		this.refresh();
-	}
-
-	/**
-	 * Update heartbeat for a task being worked on
-	 */
-	public workingOnTask(taskId: string) {
-		const work = this.activeWork.get(taskId);
-		if (work) {
-			work.lastHeartbeat = Date.now();
-		} else {
-			// If not tracked, start tracking
-			this.startingTask(taskId);
-		}
-		this.refresh();
-	}
-
-	/**
-	 * Stop tracking active work on a task
-	 */
-	public stoppingTask(taskId: string) {
-		this.activeWork.delete(taskId);
-		this.refresh();
-	}
-
-	/**
-	 * Check for timed-out heartbeats
-	 */
-	private startHeartbeatMonitoring() {
-		this.heartbeatCheckInterval = setInterval(() => {
-			const now = Date.now();
-			let anyRemoved = false;
-
-			for (const [taskId, work] of this.activeWork.entries()) {
-				if (now - work.lastHeartbeat > this.HEARTBEAT_TIMEOUT_MS) {
-					this.activeWork.delete(taskId);
-					anyRemoved = true;
-				}
-			}
-
-			if (anyRemoved) {
-				this.refresh();
-			}
-		}, 5000); // Check every 5 seconds
 	}
 
 	/**
@@ -187,9 +121,6 @@ export class TaskStatusView {
 	 * Render a single task card
 	 */
 	private renderTask(task: Task): string {
-		const isActive = this.activeWork.has(task.id);
-		const spinnerHtml = isActive ? '<span class="spinner"></span>' : '';
-		
 		// Build branch HTML if present
 		const branchHtml = task.branch ? `
 			<div class="task-meta">
@@ -217,7 +148,6 @@ export class TaskStatusView {
 			.replace(/{{STATUS}}/g, task.status)
 			.replace('{{TASK_ID}}', this.escapeHtml(task.id))
 			.replace('{{TASK_TITLE}}', this.escapeHtml(task.title))
-			.replace('{{SPINNER}}', spinnerHtml)
 			.replace('{{STATUS_LABEL}}', task.status.replace('_', ' '))
 			.replace('{{TASK_DESCRIPTION}}', this.escapeHtml(task.description))
 			.replace('{{BRANCH_HTML}}', branchHtml)
@@ -261,9 +191,6 @@ export class TaskStatusView {
 	 * Dispose of resources
 	 */
 	public dispose() {
-		if (this.heartbeatCheckInterval) {
-			clearInterval(this.heartbeatCheckInterval);
-		}
 		this.disposables.forEach(d => d.dispose());
 		this.panel?.dispose();
 	}

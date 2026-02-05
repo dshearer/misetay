@@ -6,7 +6,6 @@ import * as path from 'path';
 import { BeadsBackend } from './beadsBackend';
 import { registerTaskTools } from './taskTools';
 import { TaskStatusView } from './taskStatusView';
-import { registerHeartbeatTools } from './heartbeatTools';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -52,9 +51,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Register task management tools
 	registerTaskTools(context, taskBackend);
-
-	// Register heartbeat tools
-	registerHeartbeatTools(context, taskStatusView);
 
 	// Register Show Task Status command
 	const showTaskStatusCommand = vscode.commands.registerCommand('smidja.showTaskStatus', async () => {
