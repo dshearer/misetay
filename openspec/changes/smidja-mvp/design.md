@@ -270,8 +270,6 @@ Final history: 4 commits, chronological order
 │   └── SKILL.md (name: execution, description: implement tasks sequentially)
 ├── review/
 │   └── SKILL.md (name: review, description: review code changes)
-└── git-ops/
-    └── SKILL.md (name: git-ops, description: git operations)
 ```
 
 Main agent defines overall role and available tools. Skills provide detailed
@@ -337,7 +335,6 @@ Backend stores task metadata
 
 ### Required Extensions
 - GitHub Copilot (subscription required)
-- **Beatrice** (`dshearer.beatrice`) - Provides navigation tools for review flow
 
 ### Required Tools
 - Task backend (default: Beads CLI via `brew install beads` or npm/go)
@@ -352,12 +349,6 @@ Backend stores task metadata
 2. **GitHub Issues**: Requires GH token, web-based
 3. **Linear**: Requires API key, web-based
 4. **Custom**: Implement task tool interface
-
-### Why Depend on Beatrice?
-- **Proven tools**: Navigation tools already implemented and tested
-- **Consistency**: Both extensions share same navigation UX
-- **Maintenance**: Don't duplicate code that already works
-- **Smaller footprint**: Smidja extension only handles task management
 
 ## Open Questions
 

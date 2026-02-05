@@ -117,8 +117,6 @@ After creating all tasks:
    Ready to start implementing? I'll begin with task bd-abc1.
    ```
 
-3. Transition to execution phase (or wait for user to ask)
-
 ## Planning Completion Criteria
 
 Planning is complete when:
@@ -220,4 +218,5 @@ You: [Creates 7 tasks with appropriate dependencies]
 - **Confirm before acting** - Get approval before creating tasks
 - **Stay in phase** - Complete planning before switching to execution
 
-Once planning is done, you're ready to start executing tasks!
+**IMPORTANT**: If the user asks you to start executing the plan (and the plan is done and all tasks have been
+created), then use the "execution" skill to do this.

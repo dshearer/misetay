@@ -21,7 +21,7 @@ The human maintains control and context while the AI handles implementation deta
 - `task-execution`: Sequential AI-driven implementation using GitHub Copilot's edit tool
 - `code-review-flow`: Beatrice-style file navigation to review task changes in VS Code
 - `state-management`: Beads integration for persistent task tracking and status
-- `git-orchestration`: Automated branch and commit management per task
+- `git-orchestration`: Automated commit management per task
 
 ### Modified Capabilities
 

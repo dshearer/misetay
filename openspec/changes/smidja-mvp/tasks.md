@@ -68,11 +68,11 @@
 
 ## 8. Execution Skill
 
-- [ ] 8.1 Create skills/execution/SKILL.md
-- [ ] 8.2 Add branch creation instructions
-- [ ] 8.3 Define task execution loop (ready → in_progress → edit → commit → committed)
-- [ ] 8.4 Add commit message format: "Title (task-id)"
-- [ ] 8.5 Define task completion and transition logic
+- [x] 8.1 Create skills/execution/SKILL.md
+- [x] 8.2 Add branch creation instructions
+- [x] 8.3 Define task execution loop (ready → in_progress → edit → commit → committed)
+- [x] 8.4 Add commit message format: "Title (task-id)"
+- [x] 8.5 Define task completion and transition logic
 
 ## 9. Review Skill
 
@@ -83,31 +83,23 @@
 - [ ] 9.5 Add approval/rejection handling (status updates)
 - [ ] 9.6 Add fix commit instructions (append, don't rebase)
 
-## 10. Git Operations Skill
+## 10. Installation Command (Full)
 
-- [ ] 10.1 Create skills/git-ops/SKILL.md
-- [ ] 10.2 Define branch creation: git checkout -b feature/...
-- [ ] 10.3 Define commit workflow: git add -A, git commit -m "..."
-- [ ] 10.4 Add git log commands for finding commits
-- [ ] 10.5 Add safety checks (don't commit when review fails, etc.)
+- [x] 10.1 Extend "Smidja: Install Agent" command to copy skill files
+- [x] 10.2 Command copies all skill files to .github/skills/
+- [x] 10.3 Command creates full directory structure if needed
+- [x] 10.4 Command shows success message with next steps
 
-## 11. Installation Command (Full)
-
-- [ ] 11.1 Extend "Smidja: Install Agent" command to copy skill files
-- [ ] 11.2 Command copies all skill files to .github/skills/
-- [ ] 11.3 Command creates full directory structure if needed
-- [ ] 11.4 Command shows success message with next steps
-
-## 12. Documentation
+## 11. Documentation
 
 - [ ] 12.1 Write README with quick start
 - [ ] 12.2 Document Beatrice extension requirement
 - [ ] 12.3 Document task backend setup (default: Beads)
 - [ ] 12.4 Document GitHub Copilot requirements
 - [ ] 12.5 Add workflow examples
-- [ ] 12.6 Add troubleshooting guide
+- [ ] 11.6 Add troubleshooting guide
 
-## 13. Testing & Validation
+## 12. Testing & Validation
 
 - [ ] 13.1 Test planning dialogue flow
 - [ ] 13.2 Test task execution creates correct commits
