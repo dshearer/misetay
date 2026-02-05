@@ -11,13 +11,6 @@ The agent SHALL execute tasks one at a time, respecting dependency order establi
 - **WHEN** task depends on another task that is not yet committed
 - **THEN** agent waits until dependency is committed before starting
 
-### Requirement: Agent creates feature branch
-The agent SHALL create a new git branch for the feature before executing the first task.
-
-#### Scenario: First task execution
-- **WHEN** agent starts executing the first task
-- **THEN** agent runs `git checkout -b feature/<name>` to create a branch
-
 ### Requirement: Agent updates task status during execution
 The agent SHALL use the updateTask tool to track task status through the execution lifecycle.
 
