@@ -5,6 +5,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { BeadsBackend } from './beadsBackend';
 import { registerTaskTools } from './taskTools';
+import { TaskStatusView } from './taskStatusView';
+import { registerHeartbeatTools } from './heartbeatTools';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -42,8 +44,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const taskBackend = new BeadsBackend(workspaceRoot);
 
+	// Initialize task status view
+	const taskStatusView = new TaskStatusView(context, taskBackend);
+	context.subscriptions.push({
+		dispose: () => taskStatusView.dispose()
+	});
+
 	// Register task management tools
 	registerTaskTools(context, taskBackend);
+
+	// Register heartbeat tools
+	registerHeartbeatTools(context, taskStatusView);
+
+	// Register Show Task Status command
+	const showTaskStatusCommand = vscode.commands.registerCommand('smidja.showTaskStatus', async () => {
+		await taskStatusView.show();
+	});
 
 	// Register Install Agent command
 	const installAgentCommand = vscode.commands.registerCommand('smidja.installAgent', async () => {
@@ -79,7 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	});
 
-	context.subscriptions.push(installAgentCommand);
+	context.subscriptions.push(showTaskStatusCommand, installAgentCommand);
 }
 
 // This method is called when your extension is deactivated

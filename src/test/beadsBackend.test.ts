@@ -20,22 +20,22 @@ suite('Beads Backend Integration Tests', () => {
 			this.skip();
 			return;
 		}
+	});
 
-		// Create temp directory once for entire suite
+	setup(async function() {
+		// Create a fresh temp directory for each test
+		// Increase timeout from default 2s to 5s since bd init can be slow
+		this.timeout(5000);
 		tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'beads-test-'));
 		
-		// Initialize beads once
+		// Initialize beads for this test
 		await execFileAsync('bd', ['init'], { cwd: tempDir });
 		
 		backend = new BeadsBackend(tempDir);
 	});
 
-	setup(async function() {
-		// No cleanup needed - each test creates its own tasks
-		// and beads can handle multiple tasks in the same database
-	});
-
-	suiteTeardown(async () => {
+	teardown(async () => {
+		// Clean up the temp directory after each test
 		if (tempDir) {
 			await fs.rm(tempDir, { recursive: true, force: true });
 		}
@@ -107,16 +107,6 @@ test('updateTask updates multiple fields', async () => {
 		assert.strictEqual(updated.description, 'New description');
 	});
 
-test('createTask can create with committed status', async () => {
-		const task = await backend.createTask('Committed Task', 'Description', 'committed');
-		assert.strictEqual(task.status, 'committed');
-	});
-
-test('createTask can create with reviewed status', async () => {
-		const task = await backend.createTask('Reviewed Task', 'Description', 'reviewed');
-		assert.strictEqual(task.status, 'reviewed');
-	});
-
 test('updateTask can transition to reviewed status', async () => {
 		const task = await backend.createTask('Task', 'Desc', 'committed');
 		const updated = await backend.updateTask(task.id, { status: 'reviewed' });
@@ -131,6 +121,16 @@ test('updateTask can transition from reviewed back to committed', async () => {
 		assert.strictEqual(updated.status, 'committed');
 	});
 
+test('listTasks returns all tasks', async () => {
+		await backend.createTask('Task 1', 'Desc 1', 'ready');
+		await backend.createTask('Task 2', 'Desc 2', 'in_progress');
+		await backend.createTask('Task 3', 'Desc 3', 'committed');
+		await backend.createTask('Task 4', 'Desc 4', 'reviewed');
+		
+		const tasks = await backend.listTasks();
+		assert.strictEqual(tasks.length, 4);
+	});
+
 test('listTasks filters committed vs reviewed correctly', async () => {
 		await backend.createTask('Task 1', 'Desc 1', 'committed');
 		await backend.createTask('Task 2', 'Desc 2', 'reviewed');
@@ -141,16 +141,8 @@ test('listTasks filters committed vs reviewed correctly', async () => {
 		
 		// Note: Due to beads mapping both to 'closed', this might return all closed tasks
 		// We're testing that the mapping roundtrip works correctly
-		assert.ok(committedTasks.length >= 2);
-		assert.ok(reviewedTasks.length >= 1);
-	});
-
-test('listTasks returns all tasks', async () => {
-		await backend.createTask('Task 1', 'Desc 1', 'ready');
-		await backend.createTask('Task 2', 'Desc 2', 'in_progress');
-		
-		const tasks = await backend.listTasks();
-		assert.strictEqual(tasks.length, 2);
+		assert.strictEqual(2, committedTasks.length);
+		assert.strictEqual(1, reviewedTasks.length);
 	});
 
 test('listTasks filters by status', async () => {

@@ -202,15 +202,31 @@ export class BeadsBackend implements TaskBackend {
 
 	async listTasks(filters?: { status?: TaskStatus; branch?: string }): Promise<Task[]> {
 		try {
-			const args = ['--json', 'list'];
+			const args: string[] = ['--json', 'list'];
+
+			// By default, include all tasks (open and closed)
+			args.push('--all');
+
+			const labels: string[] = [];
 
 			if (filters?.status) {
-				const { status: beadsStatus } = this.toBeadsStatusAndLabels(filters.status);
+				const { status: beadsStatus, label: label } = this.toBeadsStatusAndLabels(filters.status);
 				args.push('-s', beadsStatus);
+				if (label !== undefined) {
+					labels.push(label);
+				}
 			}
+
 			// Filter by branch label if specified
 			if (filters?.branch) {
-				args.push('-l', `branch:${filters.branch}`);
+				labels.push(`branch:${filters.branch}`);
+			}
+
+			if (labels.length > 0) {
+				for (const label of labels) {
+					args.push('-l');
+					args.push(labels.join(','));
+				}
 			}
 
 			const { stdout } = await execFileAsync('bd', args, {

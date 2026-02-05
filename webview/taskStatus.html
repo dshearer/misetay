@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Smidja Tasks</title>
+	<style>
+		:root {
+			--status-ready: var(--vscode-charts-blue);
+			--status-in-progress: var(--vscode-charts-yellow);
+			--status-blocked: var(--vscode-charts-red);
+			--status-committed: var(--vscode-charts-green);
+			--status-reviewed: var(--vscode-charts-purple);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: var(--vscode-font-family);
+			font-size: var(--vscode-font-size);
+			color: var(--vscode-foreground);
+			background: var(--vscode-editor-background);
+			padding: 20px;
+			line-height: 1.6;
+		}
+
+		h1 {
+			font-size: 24px;
+			font-weight: 600;
+			margin-bottom: 24px;
+			color: var(--vscode-titleBar-activeForeground);
+		}
+
+		.tasks-container {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.task-card {
+			background: var(--vscode-editor-inactiveSelectionBackground);
+			border-left: 4px solid;
+			border-radius: 6px;
+			padding: 12px;
+			transition: all 0.2s ease;
+		}
+
+		.task-card.ready { border-left-color: var(--status-ready); }
+		.task-card.in_progress { border-left-color: var(--status-in-progress); }
+		.task-card.blocked { border-left-color: var(--status-blocked); }
+		.task-card.committed { border-left-color: var(--status-committed); }
+		.task-card.reviewed { border-left-color: var(--status-reviewed); }
+
+		.task-header {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 8px;
+		}
+
+		.task-id {
+			font-family: var(--vscode-editor-font-family);
+			font-size: 12px;
+			color: var(--vscode-descriptionForeground);
+			background: var(--vscode-badge-background);
+			padding: 2px 8px;
+			border-radius: 4px;
+		}
+
+		.task-title {
+			font-size: 16px;
+			font-weight: 500;
+			flex: 1;
+		}
+
+		.task-status {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			font-size: 12px;
+			padding: 4px 10px;
+			border-radius: 12px;
+			text-transform: capitalize;
+			font-weight: 500;
+		}
+
+		.task-status.ready { 
+			background: color-mix(in srgb, var(--status-ready) 20%, transparent);
+			color: var(--status-ready);
+		}
+		.task-status.in_progress { 
+			background: color-mix(in srgb, var(--status-in-progress) 20%, transparent);
+			color: var(--status-in-progress);
+		}
+		.task-status.blocked { 
+			background: color-mix(in srgb, var(--status-blocked) 20%, transparent);
+			color: var(--status-blocked);
+		}
+		.task-status.committed { 
+			background: color-mix(in srgb, var(--status-committed) 20%, transparent);
+			color: var(--status-committed);
+		}
+		.task-status.reviewed { 
+			background: color-mix(in srgb, var(--status-reviewed) 20%, transparent);
+			color: var(--status-reviewed);
+		}
+
+		.task-description {
+			font-size: 14px;
+			color: var(--vscode-descriptionForeground);
+			margin-bottom: 12px;
+			line-height: 1.5;
+		}
+
+		.task-meta {
+			display: flex;
+			gap: 16px;
+			flex-wrap: wrap;
+			font-size: 12px;
+			color: var(--vscode-descriptionForeground);
+		}
+
+		.task-meta-item {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.spinner {
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			border: 2px solid var(--vscode-progressBar-background);
+			border-top-color: transparent;
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+		}
+
+		@keyframes spin {
+			to { transform: rotate(360deg); }
+		}
+
+		.dependencies {
+			margin-top: 12px;
+			padding-top: 12px;
+			border-top: 1px solid var(--vscode-panel-border);
+		}
+
+		.dependency-label {
+			font-size: 11px;
+			text-transform: uppercase;
+			color: var(--vscode-descriptionForeground);
+			margin-bottom: 6px;
+		}
+
+		.dependency-list {
+			display: flex;
+			gap: 6px;
+			flex-wrap: wrap;
+		}
+
+		.dependency-tag {
+			background: var(--vscode-badge-background);
+			color: var(--vscode-badge-foreground);
+			padding: 2px 8px;
+			border-radius: 4px;
+			font-size: 11px;
+			font-family: var(--vscode-editor-font-family);
+		}
+
+		.section-header {
+			font-size: 14px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: var(--vscode-descriptionForeground);
+			margin: 24px 0 12px 0;
+			padding-bottom: 8px;
+			border-bottom: 1px solid var(--vscode-panel-border);
+		}
+
+		.section-header:first-of-type {
+			margin-top: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>📋 Smidja Tasks</h1>
+	
+	{{TASKS_CONTENT}}
+
+	<script>
+		const vscode = acquireVsCodeApi();
+
+		// Auto-refresh every 5 seconds
+		setInterval(() => {
+			vscode.postMessage({ type: 'refresh' });
+		}, 5000);
+	</script>
+</body>
+</html>

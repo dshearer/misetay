@@ -39,23 +39,24 @@
 
 ## 6. Task Status View
 
-- [ ] 6.1 Create VS Code command "Smidja: Show Task Status"
-- [ ] 6.2 Create webview panel with HTML/CSS/JS for modern UI
-- [ ] 6.3 Implement task list rendering with status indicators
-- [ ] 6.4 Add visual task dependency display (tree or indented structure)
-- [ ] 6.5 Implement real-time view updates when tasks change
-- [ ] 6.6 Add click handlers for task details modal/panel
-- [ ] 6.7 Add context menu actions (view commits, review task, mark reviewed)
-- [ ] 6.8 Use VS Code CSS variables for theme compatibility
-- [ ] 6.9 Design welcoming empty state with quick start guidance
-- [ ] 6.10 Implement startingTask tool (dshearer.smidja/startingTask)
-- [ ] 6.11 Implement workingOnTask tool (dshearer.smidja/workingOnTask)
-- [ ] 6.12 Add spinner animation for tasks with active work
-- [ ] 6.13 Implement 7-minute heartbeat timeout logic
-- [ ] 6.14 Register heartbeat tools in extension activation
-- [ ] 6.15 Apply modern design: animations, typography, spacing, colors
-- [ ] 6.16 Test view with different VS Code themes (light/dark/high-contrast)
-- [ ] 6.17 Test view responsiveness at different panel widths
+- [x] 6.1 Create VS Code command "Smidja: Show Task Status"
+- [x] 6.2 Create webview panel with HTML/CSS/JS for modern UI
+- [x] 6.3 Implement task list rendering with status indicators
+- [x] 6.4 Add visual task dependency display (tree or indented structure)
+- [x] 6.5 Implement real-time view updates when tasks change
+- [x] 6.6 Add click handlers for task details modal/panel
+- [x] 6.7 Add context menu actions (view commits, review task, mark reviewed)
+- [x] 6.8 Use VS Code CSS variables for theme compatibility
+- [x] 6.9 Design welcoming empty state with quick start guidance
+- [x] 6.10 Implement startingTask tool (dshearer.smidja/startingTask)
+- [x] 6.11 Implement workingOnTask tool (dshearer.smidja/workingOnTask)
+- [x] 6.12 Implement stoppingTask tool (dshearer.smidja/stoppingTask)
+- [x] 6.13 Add spinner animation for tasks with active work
+- [x] 6.14 Implement 7-minute heartbeat timeout logic
+- [x] 6.15 Register heartbeat tools in extension activation
+- [x] 6.16 Apply modern design: animations, typography, spacing, colors
+- [x] 6.17 Test view with different VS Code themes (light/dark/high-contrast)
+- [x] 6.18 Test view responsiveness at different panel widths
 
 ## 7. Planning Skill
 

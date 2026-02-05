@@ -1,6 +1,25 @@
 # Smidja - AI Agent Tool that Keeps You in the Loop
 
-Collaborative AI pair programming with GitHub Copilot. Stay in the loop while AI implements your tasks.
+When you build software with Smidja, you are __involved__ and __in charge__. 
+
+When Smidja says "All done!", you actually believe it! You're ready to:
+- __Slam that merge button__, or
+- Pester your colleages for PR approvals without shame, or
+- Deploy, then close your laptop and have a drink
+
+Because: You've already reviewed the code! You were there from the begining!
+
+## Manifesto
+
+### The Non-Future
+
+- To make the best use of AI, we need to **SLOW DOWN**
+- Swarms of agents are fun to play with but **they are not the future of work**
+- Businesses will not put up with things running around doing God-knows-what and **no one to blame** when things go wrong
+
+### The Future
+
+- AI will boost productivity by **empowering human workers**, to __understand more__ and to __build more__
 
 ## Features
 
