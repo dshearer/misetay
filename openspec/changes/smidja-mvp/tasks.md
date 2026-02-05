@@ -76,12 +76,12 @@
 
 ## 9. Review Skill
 
-- [ ] 9.1 Create skills/review/SKILL.md
-- [ ] 9.2 Add instructions for finding commits (git log --grep)
-- [ ] 9.3 Add instructions for finding affected files
-- [ ] 9.4 Define file-by-file review flow using Beatrice navigation tools
-- [ ] 9.5 Add approval/rejection handling (status updates)
-- [ ] 9.6 Add fix commit instructions (append, don't rebase)
+- [x] 9.1 Create skills/review/SKILL.md
+- [x] 9.2 Add instructions for finding commits (git log --grep)
+- [x] 9.3 Add instructions for finding affected files
+- [x] 9.4 Define file-by-file review flow using Beatrice navigation tools
+- [x] 9.5 Add approval/rejection handling (status updates)
+- [x] 9.6 Add fix commit instructions (append, don't rebase)
 
 ## 10. Installation Command (Full)
 
