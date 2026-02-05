@@ -1,22 +1,11 @@
 ## ADDED Requirements
 
-### Requirement: Agent creates feature branch before first task
-The agent SHALL create a new git branch for the feature work before executing the first task.
+### Requirement: Agent works on current branch
+The agent SHALL make all commits on whatever branch is currently checked out.
 
-#### Scenario: Starting first task
-- **WHEN** agent begins executing the first task of a feature
-- **THEN** agent runs `git checkout -b feature/<descriptive-name>`
-
-#### Scenario: Branch name is descriptive
-- **WHEN** agent creates a feature branch
-- **THEN** branch name reflects the feature being implemented
-
-### Requirement: All tasks commit to same branch
-The agent SHALL commit all tasks for a feature to the same feature branch.
-
-#### Scenario: Multiple tasks in feature
-- **WHEN** feature has multiple tasks
-- **THEN** all task commits are made to the same feature branch
+#### Scenario: Executing tasks
+- **WHEN** agent executes tasks
+- **THEN** agent commits to the current git branch without creating new branches
 
 ### Requirement: Commits include task ID in message
 The agent SHALL include the task ID in every commit message for traceability.
@@ -49,10 +38,6 @@ The agent SHALL stage all modified files before creating each commit.
 
 ### Requirement: Git operations use shell tool
 The agent SHALL use the shell tool to execute git commands.
-
-#### Scenario: Creating branch
-- **WHEN** agent needs to create a branch
-- **THEN** agent uses shell tool to run git command
 
 #### Scenario: Committing changes
 - **WHEN** agent needs to commit

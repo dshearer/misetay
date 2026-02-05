@@ -39,15 +39,14 @@ When starting a new project or feature:
 
 For each task in the plan:
 
-1. **Check dependencies** - Use `dshearer.smidja/listTasks` to verify all parent tasks are "committed"
+1. **Check dependencies** - Use `dshearer.smidja/listTasks` to verify all parent tasks are "committed" or "reviewed"
 2. **Start task** - Update task status to "in_progress" using `dshearer.smidja/updateTask`
-3. **Create branch** - Create a feature branch: `git checkout -b feature/descriptive-name`
-4. **Implement changes** - Write code, tests, documentation as needed
-5. **Commit work** - Commit with format: `"Task Title (task-id)"`
+3. **Implement changes** - Write code, tests, documentation as needed
+4. **Commit work** - Commit with format: `"Task Title (task-id)"`
    - Use `git add -A` to stage all changes
    - Include the task ID in the commit message for traceability
-6. **Mark committed** - Update task status to "committed" using `dshearer.smidja/updateTask`
-7. **Move to next task** - Continue with the next ready task
+5. **Mark committed** - Update task status to "committed" using `dshearer.smidja/updateTask`
+6. **Move to next task** - Continue with the next ready task
 
 ### 3. Review Phase
 
@@ -61,7 +60,7 @@ When the user requests a review of a committed task:
    - `dshearer.beatrice/navigateToLine` to jump to specific locations
 4. **Handle feedback**:
    - **Approved**: Update task status to "reviewed" using `dshearer.smidja/updateTask`
-   - **Changes requested**: Keep status as "committed", implement fixes, append new commit with same task ID
+   - **Changes requested**: Switch status to "in_progress", implement fixes, append new commit with same task ID, and finally switch status to "committed"
    - Never rebase or amend - always append new commits
 
 ## Key Principles
