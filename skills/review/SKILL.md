@@ -17,7 +17,12 @@ Use this skill when:
 
 ## Review Flow
 
-### Step 1: Find Task Commits
+Think of this as a "tour" of the changes you made for a task. Your first job is to plan the tour as a series of "stops"
+based on your code changes shown in the task commits.
+
+### Phase 1: Plan the Tour
+
+#### Step 1: Find Task Commits
 
 Use git log to find all commits associated with the task ID:
 
@@ -33,7 +38,7 @@ This returns commit hashes and messages for all commits that include the task ID
 - All commits are part of the review
 - Show files from the most recent commit state (HEAD)
 
-### Step 2: Identify Affected Files
+#### Step 2: Identify Affected Files
 
 Determine which files were modified by the task:
 
@@ -46,34 +51,44 @@ This returns a list of file paths that were touched by any commit for this task.
 
 **De-duplicate the file list** if the same file appears multiple times.
 
-### Step 3: Open and Explain Files
+#### Step 3: Plan the Tour
 
-For each affected file, guide the user through the changes using the navigation tools:
+Make a tour plan. A plan consists of a sequence of "stops" each of
+which specifies (1) a code file and a line range and (2) what you want to tell the user about the file
+and line range.
 
-**For each file:**
+### Phase 2: Take the User on the Tour
 
-1. **Open the file** at current HEAD using `dshearer.misetay/openFile`:
-   - filePath: path to the file (relative to workspace root)
-   - line: (optional) line number to start at
+Once the user has confirmed that they are ready for the tour, follow these steps for each of the stops
+in your tour plan (in order):
 
-2. **Highlight relevant sections** using `dshearer.misetay/highlightLines`:
-   - startLine: first line of the changed code
-   - endLine: last line of the changed code
-   - Use this to draw attention to specific changes
-
-3. **Center code in viewport** using `dshearer.misetay/navigateToLine`:
-   - line: the line number to center
-   - Use this to ensure important code is visible
-
-4. **Explain in chat** what was done and why:
-   - Describe the changes made to this file
-   - Explain the purpose and reasoning
-   - Point out any important details or decisions
-   - Keep explanations conversational and clear
+1. Open the file with the `dshearer.misetay/openFile` tool
+2. Highlight the line range using the `dshearer.misetay/highlightLines` tool
+3. Make the line range visible with the `dshearer.misetay/navigateToLine` tool
+4. Say what you planned to say about the code. Make sure it fits in your broader narrative. Tell the user
+what this code does and why it matters.
+5. Before moving to the next stop, check off the todo item corresponding to this stop (with the `todo` tool)
 
 **Important**: Show files at their **current state (HEAD)**, not as diffs. The user can see diffs in their git tool if needed. Your job is to provide context and narrative.
 
 **Important**: Do the review SLOWLY. Do not continue to the next item until the user tells you to.
+
+Write like a knowledgeable coworker giving a walkthrough.
+
+**Always wait for the user between tour stops.** After explaining a stop:
+- Do NOT auto-advance to the next file
+- The user controls the pace
+
+When the user asks a question during a tour:
+- **Brief question** (clarification): Answer in 1-2 sentences, then ask "Ready to continue the tour?"
+- **Deep-dive request** ("show me how that works", "dig deeper into X"): Create a mini sub-tour for that topic, then return to the main tour
+- **Off-topic question**: Answer briefly, remind them where you were in the tour, offer to continue
+
+**How to tell the difference:**
+- Contains a question mark or question words → it's a question, answer it
+- Says "show me", "go to", "open" → navigation request, adjust the tour
+- Says "skip", "next", "continue", "ok", "got it" → continuation signal, proceed
+- Says "stop", "cancel", "enough" → end the tour gracefully
 
 **Navigation Example:**
 
@@ -89,9 +104,12 @@ theme context and applies the appropriate color based on the theme.variant prop.
 
 Previously it was using hard-coded colors. Now it dynamically adapts to 
 light/dark mode.
+
+Do you have any questions or comments, or would you like me to show you the next
+change?
 ```
 
-### Step 4: Handle Review Feedback
+### Phase 3: Review Feedback and Action Items
 
 After showing all files, **ask the user for feedback**:
 
@@ -103,8 +121,6 @@ After showing all files, **ask the user for feedback**:
 ```
 
 **Wait for user response.**
-
-### Step 5: Process Approval or Changes
 
 #### Scenario: User Approves
 
@@ -144,9 +160,8 @@ If user requests modifications or points out issues:
    - taskId: the task ID
    - updates: { status: "committed" }
 
-4. **Commit the fix and state together** with a descriptive message:
+4. **Commit the fix** with a descriptive message. Call `dshearer.misetay/backendInfo` first — if `persistsToFiles` is true, stage all changes (`git add -A`). If `persistsToFiles` is false, stage only the code files you changed.
    ```bash
-   git add -A
    git commit -m "Fix <description of what was fixed> (task-id)"
    ```
 
@@ -158,7 +173,7 @@ If user requests modifications or points out issues:
 
 **Continue the review cycle** until user approves.
 
-### Step 6: Multiple Review Rounds
+### Multiple Review Rounds
 
 A task may go through multiple review iterations. That's expected and fine.
 
@@ -168,7 +183,6 @@ A task may go through multiple review iterations. That's expected and fine.
 - **Include task ID in fix commits**: Format is `"Fix <description> (task-id)"`
 - **Never amend or rebase**: Keep the commit history intact
 - **Each round is a new review**: User may request changes multiple times
-- **Do the review slowly and one item at a time**
 
 **Example commit history for a task:**
 ```
@@ -214,49 +228,6 @@ Always use the Misetay navigation tools:
 - **Never rebase** to "clean up" review fixes
 - Each fix is a new commit with the same task ID
 - Chronological history is valuable for understanding how work evolved
-
-## Example Review Session
-
-```
-User: "Review task bd-abc3"
-
-Agent: "Let me show you what was done for task bd-abc3: Update Button component to use theme colors"
-
-[Runs: git log --grep="(bd-abc3)" --format="%H %s"]
-[Runs: git log --grep="(bd-abc3)" --name-only --format=""]
-[Finds: src/components/Button.tsx, src/components/Button.test.tsx]
-
-Agent: "I'll walk you through the changes. First, let's look at the Button component..."
-
-[Opens src/components/Button.tsx]
-[Highlights lines 45-67]
-
-Agent: "I've updated the Button component to use theme colors from the ThemeContext.
-The main change is on lines 45-67 where the button now reads from the theme 
-context and applies the appropriate color based on the theme.variant prop.
-
-[Highlights lines 12-15]
-
-Here at the top, I've added the useContext hook to access the theme.
-
-Now let's look at the tests..."
-
-[Opens src/components/Button.test.tsx]
-[Highlights lines 78-95]
-
-Agent: "I added tests to verify the button renders with correct colors in both 
-light and dark modes. These tests mock the ThemeContext and check that the 
-right CSS classes are applied.
-
-That's everything for this task. What do you think?
-
-- If it looks good, I can mark it as reviewed
-- If you'd like changes, let me know what to adjust"
-
-User: "Looks good!"
-
-Agent: "✅ Marked task bd-abc3 as reviewed!"
-```
 
 ## Common Scenarios
 
