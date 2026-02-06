@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { Highlighter } from './highlighter';
 
 /**
  * Register file navigation tools for code review
@@ -57,6 +58,8 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 		}
 	});
 
+	const highlighter = new Highlighter();
+
 	// Register highlightLines tool
 	const highlightLinesTool = vscode.lm.registerTool('misetay_highlightLines', {
 		async invoke(options, token) {
@@ -74,7 +77,7 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 				const range = new vscode.Range(start, end);
 
 				// Set selection to highlight the lines
-				editor.selection = new vscode.Selection(start, end);
+				highlighter.applyHighlight(editor, range);
 				
 				// Reveal the range
 				editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
@@ -134,6 +137,26 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 				invocationMessage: `Navigating to line ${line}`
 			};
 		}
+	});
+
+	// Register clearHighlights tool
+	const clearHighlights = vscode.lm.registerTool('misetay_clearHighlights', {
+		async invoke(options, token) {
+			try {
+				highlighter.clearHighlights();
+			} catch (error: any) {
+				return new vscode.LanguageModelToolResult([
+					new vscode.LanguageModelTextPart(`Failed to clear highlights: ${error.message}`)
+				]);
+			}
+		},
+
+		prepareInvocation(options, token) {
+			const { line } = options.input as { line: number };
+			return {
+				invocationMessage: `Clearing highlights`
+			};
+		},
 	});
 
 	context.subscriptions.push(openFileTool, highlightLinesTool, navigateToLineTool);

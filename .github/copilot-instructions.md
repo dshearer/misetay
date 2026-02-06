@@ -14,3 +14,7 @@ as the source of truth about how Misetay should behave.
 IMPORTANT: Do NOT make tests that are stupid! They need to test real code -- not mock code!
 
 NOTE: Misetay is *NOT* a chat participant! It is a [custom agent](https://code.visualstudio.com/docs/copilot/customization/custom-agents)!
+
+When the user asks you to make code changes, make sure that the requested
+changes agree with the OpenSpec specs. If they don't, tell the user and
+ask what to do.

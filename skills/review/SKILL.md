@@ -20,6 +20,8 @@ Use this skill when:
 Think of this as a "tour" of the changes you made for a task. Your first job is to plan the tour as a series of "stops"
 based on your code changes shown in the task commits.
 
+*IMPORTANT*: When you are done with a tour, call the `dshearer.misetay/clearHighlights` tool.
+
 ### Phase 1: Plan the Tour
 
 #### Step 1: Find Task Commits
