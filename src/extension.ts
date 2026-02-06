@@ -111,9 +111,9 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(githubAgentsDir, { recursive: true });
 		}
 
-		// Copy agents/misetay.agent.md to .github/agents/misetay.agent.md
-		const sourceAgentFile = path.join(context.extensionPath, 'agents', 'misetay.agent.md');
-		const targetAgentFile = path.join(githubAgentsDir, 'misetay.agent.md');
+		// Copy agents/Misetay.agent.md to .github/agents/Misetay.agent.md
+		const sourceAgentFile = path.join(context.extensionPath, 'agents', 'Misetay.agent.md');
+		const targetAgentFile = path.join(githubAgentsDir, 'Misetay.agent.md');
 		
 		if (!fs.existsSync(sourceAgentFile)) {
 			vscode.window.showErrorMessage('Agent file not found in extension. Please reinstall Misetay.');

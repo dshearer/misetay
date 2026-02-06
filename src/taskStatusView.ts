@@ -11,6 +11,7 @@ export class TaskStatusView {
 	private getBackend: () => TaskBackend;
 	private disposables: vscode.Disposable[] = [];
 	private taskCardTemplate: string;
+	private refreshInterval: ReturnType<typeof setInterval> | undefined;
 
 	constructor(private context: vscode.ExtensionContext, getBackend: () => TaskBackend) {
 		this.getBackend = getBackend;
@@ -42,6 +43,7 @@ export class TaskStatusView {
 		);
 
 		this.panel.onDidDispose(() => {
+			this.stopRefreshLoop();
 			this.panel = undefined;
 		}, null, this.disposables);
 
@@ -55,7 +57,20 @@ export class TaskStatusView {
 			this.disposables
 		);
 
+		this.startRefreshLoop();
 		await this.refresh();
+	}
+
+	private startRefreshLoop() {
+		this.stopRefreshLoop();
+		this.refreshInterval = setInterval(() => this.refresh(), 5000);
+	}
+
+	private stopRefreshLoop() {
+		if (this.refreshInterval) {
+			clearInterval(this.refreshInterval);
+			this.refreshInterval = undefined;
+		}
 	}
 
 	/**
@@ -66,7 +81,13 @@ export class TaskStatusView {
 			return;
 		}
 
-		const tasks = await this.getBackend().listTasks();
+		let tasks: Task[];
+		try {
+			tasks = await this.getBackend().listTasks();
+		} catch (e) {
+			console.error('Failed to list tasks:', e);
+			tasks = [];
+		}
 		const html = this.getWebviewContent(tasks);
 		this.panel.webview.html = html;
 	}
@@ -180,6 +201,7 @@ export class TaskStatusView {
 	 * Dispose of resources
 	 */
 	public dispose() {
+		this.stopRefreshLoop();
 		this.disposables.forEach(d => d.dispose());
 		this.panel?.dispose();
 	}

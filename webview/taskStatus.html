@@ -23,15 +23,8 @@
 			font-size: var(--vscode-font-size);
 			color: var(--vscode-foreground);
 			background: var(--vscode-editor-background);
-			padding: 20px;
-			line-height: 1.6;
-		}
-
-		h1 {
-			font-size: 24px;
-			font-weight: 600;
-			margin-bottom: 24px;
-			color: var(--vscode-titleBar-activeForeground);
+			padding: 10px;
+			line-height: 1;
 		}
 
 		.tasks-container {
@@ -44,7 +37,7 @@
 			background: var(--vscode-editor-inactiveSelectionBackground);
 			border-left: 4px solid;
 			border-radius: 6px;
-			padding: 12px;
+			padding: 10px;
 			transition: all 0.2s ease;
 		}
 
@@ -58,7 +51,7 @@
 			display: flex;
 			align-items: center;
 			gap: 12px;
-			margin-bottom: 8px;
+			margin-bottom: 6px;
 		}
 
 		.task-id {
@@ -71,7 +64,7 @@
 		}
 
 		.task-title {
-			font-size: 16px;
+			font-size: 14px;
 			font-weight: 500;
 			flex: 1;
 		}
@@ -105,7 +98,6 @@
 		}
 
 		.task-description {
-			font-size: 14px;
 			color: var(--vscode-descriptionForeground);
 			margin-bottom: 12px;
 			line-height: 1.5;
@@ -115,7 +107,6 @@
 			display: flex;
 			gap: 16px;
 			flex-wrap: wrap;
-			font-size: 12px;
 			color: var(--vscode-descriptionForeground);
 		}
 
@@ -123,20 +114,6 @@
 			display: flex;
 			align-items: center;
 			gap: 6px;
-		}
-
-		.spinner {
-			display: inline-block;
-			width: 14px;
-			height: 14px;
-			border: 2px solid var(--vscode-progressBar-background);
-			border-top-color: transparent;
-			border-radius: 50%;
-			animation: spin 0.8s linear infinite;
-		}
-
-		@keyframes spin {
-			to { transform: rotate(360deg); }
 		}
 
 		.dependencies {
@@ -184,8 +161,6 @@
 	</style>
 </head>
 <body>
-	<h1>📋 Misetay Tasks</h1>
-	
 	{{TASKS_CONTENT}}
 
 	<script>
