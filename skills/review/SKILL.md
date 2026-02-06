@@ -144,9 +144,19 @@ If user requests modifications or points out issues:
    - taskId: the task ID
    - updates: { status: "committed" }
 
-4. **Commit the fix and state together** with a descriptive message:
+4. **Commit the fix** with a descriptive message:
+
+   Call `dshearer.misetay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
+
    ```bash
+   # If persistsToFiles is true:
    git add -A
+
+   # If persistsToFiles is false:
+   # Stage only specific code files you changed (not .beads/)
+   git add <file1> <file2> ...
+
+   # Commit with task ID in message
    git commit -m "Fix <description of what was fixed> (task-id)"
    ```
 
