@@ -15,6 +15,17 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Misetay",
+      "properties": {
+        "misetay.taskBackend": {
+          "type": "string",
+          "enum": ["beads", "inMemory"],
+          "default": "beads",
+          "description": "Task backend to use. 'beads' requires Beads CLI installed. 'inMemory' works without any dependencies but tasks are lost when VS Code restarts."
+        }
+      }
+    },
     "commands": [
       {
         "command": "misetay.installAgent",
@@ -220,6 +231,18 @@
           "required": [
             "line"
           ]
+        }
+      },
+      {
+        "name": "misetay_backendInfo",
+        "displayName": "Backend Info",
+        "toolReferenceName": "backendInfo",
+        "modelDescription": "Returns metadata about the active task backend, including its name and whether it persists to files. Call this before commit steps to decide whether to stage task state files.",
+        "userDescription": "Get info about the active task backend",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
         }
       }
     ]

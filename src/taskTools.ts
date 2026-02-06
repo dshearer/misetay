@@ -4,7 +4,7 @@ import { TaskBackend, Task, TaskStatus } from './taskBackend';
 /**
  * Register task management tools for language models
  */
-export function registerTaskTools(context: vscode.ExtensionContext, backend: TaskBackend) {
+export function registerTaskTools(context: vscode.ExtensionContext, getBackend: () => TaskBackend) {
 	// Register createTask tool
 	const createTaskTool = vscode.lm.registerTool('misetay_createTask', {
 		async invoke(options, token) {
@@ -15,7 +15,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 			};
 
 			try {
-				const task = await backend.createTask(title, description, status);
+				const task = await getBackend().createTask(title, description, status);
 				return new vscode.LanguageModelToolResult([
 					new vscode.LanguageModelTextPart(JSON.stringify(task, null, 2))
 				]);
@@ -43,7 +43,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 			};
 
 			try {
-				const task = await backend.updateTask(id, updates);
+				const task = await getBackend().updateTask(id, updates);
 				return new vscode.LanguageModelToolResult([
 					new vscode.LanguageModelTextPart(JSON.stringify(task, null, 2))
 				]);
@@ -68,7 +68,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 			const filters = options.input as { status?: TaskStatus } | undefined;
 
 			try {
-				const tasks = await backend.listTasks(filters);
+				const tasks = await getBackend().listTasks(filters);
 				return new vscode.LanguageModelToolResult([
 					new vscode.LanguageModelTextPart(JSON.stringify(tasks, null, 2))
 				]);
@@ -95,7 +95,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 			};
 
 			try {
-				await backend.addDependency(childId, parentId);
+				await getBackend().addDependency(childId, parentId);
 				return new vscode.LanguageModelToolResult([
 					new vscode.LanguageModelTextPart(`Added dependency: ${childId} depends on ${parentId}`)
 				]);
@@ -114,8 +114,24 @@ export function registerTaskTools(context: vscode.ExtensionContext, backend: Tas
 		}
 	});
 
-	context.subscriptions.push(createTaskTool, updateTaskTool, listTasksTool, addDependencyTool);
-	console.log('Misetay: Registered 4 task management tools');
+	// Register backendInfo tool
+	const backendInfoTool = vscode.lm.registerTool('misetay_backendInfo', {
+		async invoke(options, token) {
+			const info = getBackend().backendInfo();
+			return new vscode.LanguageModelToolResult([
+				new vscode.LanguageModelTextPart(JSON.stringify(info, null, 2))
+			]);
+		},
+
+		prepareInvocation(options, token) {
+			return {
+				invocationMessage: 'Getting backend info'
+			};
+		}
+	});
+
+	context.subscriptions.push(createTaskTool, updateTaskTool, listTasksTool, addDependencyTool, backendInfoTool);
+	console.log('Misetay: Registered 5 task management tools');
 	
 	// List all available tools to verify registration
 	setTimeout(() => {

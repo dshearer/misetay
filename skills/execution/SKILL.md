@@ -72,15 +72,19 @@ Use dshearer.misetay/updateTask:
 - updates: { status: "committed" }
 ```
 
-This updates the `.beads/issues.jsonl` file, marking the task as complete.
+This marks the task as complete in the backend.
 
 ### Step 5: Commit Changes and State Together
 
-Now commit both the code changes AND the Beads state update in one atomic commit:
+Call `dshearer.misetay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
 
 ```bash
-# Stage all changes (code + .beads/issues.jsonl)
+# If persistsToFiles is true:
 git add -A
+
+# If persistsToFiles is false:
+# Stage only specific code files you changed (not .beads/)
+git add <file1> <file2> ...
 
 # Commit with task ID in message
 git commit -m "Task description (task-id)"
@@ -93,9 +97,8 @@ Examples:
 - `"Update Button component to use theme colors (bd-abc3)"`
 - `"Add user authentication API integration (bd-xyz7)"`
 
-**Critical**: 
+**Critical**:
 - Always update status to "committed" BEFORE running git commit
-- This ensures the commit includes both code changes and state transition
 - Always include the task ID in parentheses at the end
 - This enables finding commits later with `git log --grep="task-id"`
 

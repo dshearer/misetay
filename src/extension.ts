@@ -3,7 +3,9 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { TaskBackend } from './taskBackend';
 import { BeadsBackend } from './beadsBackend';
+import { InMemoryBackend } from './inMemoryBackend';
 import { registerTaskTools } from './taskTools';
 import { TaskStatusView } from './taskStatusView';
 import { registerNavigationTools } from './navigationTools';
@@ -38,23 +40,55 @@ function copyDirectoryRecursive(source: string, target: string): void {
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Initialize task backend (default: Beads)
+	// Initialize task backend based on setting
 	const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
 	if (!workspaceRoot) {
 		vscode.window.showWarningMessage('Misetay: No workspace folder open');
 		return;
 	}
 
-	const taskBackend = new BeadsBackend(workspaceRoot);
+	const inMemoryBackend = new InMemoryBackend();
+
+	function createBackend(setting: string): TaskBackend {
+		if (setting === 'inMemory') {
+			return inMemoryBackend;
+		}
+		return new BeadsBackend(workspaceRoot!);
+	}
+
+	let taskBackend = createBackend(
+		vscode.workspace.getConfiguration('misetay').get<string>('taskBackend', 'beads')
+	);
+
+	if (taskBackend.backendInfo().name === 'inMemory') {
+		vscode.window.showInformationMessage(
+			'Misetay is using in-memory task storage. Tasks will be lost when VS Code restarts. Install Beads CLI for persistent task tracking.'
+		);
+	}
 
 	// Initialize task status view
-	const taskStatusView = new TaskStatusView(context, taskBackend);
+	const taskStatusView = new TaskStatusView(context, () => taskBackend);
 	context.subscriptions.push({
 		dispose: () => taskStatusView.dispose()
 	});
 
 	// Register task management tools
-	registerTaskTools(context, taskBackend);
+	registerTaskTools(context, () => taskBackend);
+
+	// Hot-swap backend when setting changes
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeConfiguration(e => {
+			if (e.affectsConfiguration('misetay.taskBackend')) {
+				const newSetting = vscode.workspace.getConfiguration('misetay').get<string>('taskBackend', 'beads');
+				taskBackend = createBackend(newSetting);
+				const info = taskBackend.backendInfo();
+				vscode.window.showInformationMessage(
+					`Misetay: Switched to ${info.name} backend.${info.persistsToFiles ? '' : ' Tasks will not persist across sessions.'}`
+				);
+				taskStatusView.refresh();
+			}
+		})
+	);
 
 	// Register navigation tools
 	registerNavigationTools(context);

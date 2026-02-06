@@ -8,12 +8,12 @@ import { TaskBackend, Task } from './taskBackend';
  */
 export class TaskStatusView {
 	private panel: vscode.WebviewPanel | undefined;
-	private backend: TaskBackend;
+	private getBackend: () => TaskBackend;
 	private disposables: vscode.Disposable[] = [];
 	private taskCardTemplate: string;
 
-	constructor(private context: vscode.ExtensionContext, backend: TaskBackend) {
-		this.backend = backend;
+	constructor(private context: vscode.ExtensionContext, getBackend: () => TaskBackend) {
+		this.getBackend = getBackend;
 		
 		// Load task card template
 		const templatePath = path.join(this.context.extensionPath, 'webview', 'taskCard.html');
@@ -66,7 +66,7 @@ export class TaskStatusView {
 			return;
 		}
 
-		const tasks = await this.backend.listTasks();
+		const tasks = await this.getBackend().listTasks();
 		const html = this.getWebviewContent(tasks);
 		this.panel.webview.html = html;
 	}

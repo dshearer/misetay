@@ -1,5 +1,3 @@
-import * as vscode from 'vscode';
-
 /**
  * Task status values (Misetay workflow statuses)
  */
@@ -17,9 +15,22 @@ export interface Task {
 }
 
 /**
+ * Metadata about the active backend
+ */
+export interface BackendInfo {
+	name: string;
+	persistsToFiles: boolean;
+}
+
+/**
  * Interface that task backends must implement
  */
 export interface TaskBackend {
+	/**
+	 * Return metadata about this backend
+	 */
+	backendInfo(): BackendInfo;
+
 	/**
 	 * Create a new task
 	 */

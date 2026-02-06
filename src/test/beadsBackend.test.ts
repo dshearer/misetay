@@ -41,6 +41,12 @@ suite('Beads Backend Integration Tests', () => {
 		}
 	});
 
+	test('backendInfo returns correct metadata', () => {
+		const info = backend.backendInfo();
+		assert.strictEqual(info.name, 'beads');
+		assert.strictEqual(info.persistsToFiles, true);
+	});
+
 	test('createTask creates task with correct fields', async () => {
 		const task = await backend.createTask('Test Task', 'Test description', 'ready');
 		

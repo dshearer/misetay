@@ -100,19 +100,22 @@ Once the user approves, create tasks using the tools:
 
 ### Step 5: Commit Planning State
 
-After creating all tasks, commit the Beads state to Git:
+After creating all tasks, call `dshearer.misetay/backendInfo` to check the backend type.
+
+**If `persistsToFiles` is true:** Commit the task state to Git:
 
 ```bash
-# Commit the task state created during planning
 git add -A
 git commit -m "Plan feature: <feature name>"
 ```
 
-This creates a commit containing only the `.beads/issues.jsonl` changes from planning.
+This creates a commit containing the `.beads/issues.jsonl` changes from planning.
+
+**If `persistsToFiles` is false:** Skip the commit — in-memory tasks have no files to stage. Just confirm that tasks were created successfully.
 
 ### Step 6: Confirm Completion
 
-After committing the plan:
+After creating the plan (and committing if applicable):
 
 1. List the created tasks to confirm they're in the system using `dshearer.misetay/listTasks`
 

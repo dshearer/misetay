@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { TaskBackend, Task, TaskStatus } from './taskBackend';
+import { TaskBackend, Task, TaskStatus, BackendInfo } from './taskBackend';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 
@@ -13,6 +13,10 @@ export class BeadsBackend implements TaskBackend {
 
 	constructor(workspaceRoot: string) {
 		this.workspaceRoot = workspaceRoot;
+	}
+
+	backendInfo(): BackendInfo {
+		return { name: 'beads', persistsToFiles: true };
 	}
 
 	/**
