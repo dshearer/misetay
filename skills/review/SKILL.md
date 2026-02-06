@@ -40,16 +40,22 @@ This returns commit hashes and messages for all commits that include the task ID
 - All commits are part of the review
 - Show files from the most recent commit state (HEAD)
 
-#### Step 2: Identify Affected Files
+#### Step 2: Identify Changes in the Commits
 
-Determine which files were modified by the task:
+Look at what files were changed and which lines in those files were changed.
+
+Helpful commands:
 
 ```bash
-# Get list of unique files modified by task commits
-git log --grep="(task-id)" --name-only --format=""
-```
+# Diff for a specific commit
+git diff <commit>
 
-This returns a list of file paths that were touched by any commit for this task.
+# Diff between commits
+git diff <commit1> <commit2>
+
+# Show contents of file in commit with line numbers
+git show <commit>:<path-to-file> | cat -n
+```
 
 **De-duplicate the file list** if the same file appears multiple times.
 
@@ -58,6 +64,10 @@ This returns a list of file paths that were touched by any commit for this task.
 Make a tour plan. A plan consists of a sequence of "stops" each of
 which specifies (1) a code file and a line range and (2) what you want to tell the user about the file
 and line range.
+
+Very important rules:
+- Only show _relevant changes_ from the commits -- do not guess what the changes were
+- Make sure that the line numbers you use for highlighting are correct
 
 ### Phase 2: Take the User on the Tour
 
