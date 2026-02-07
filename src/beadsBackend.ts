@@ -138,7 +138,7 @@ export class BeadsBackend implements TaskBackend {
 				});
 				const current = JSON.parse(currentData)[0]; // bd show returns an array
 
-				// Remove old committed/reviewed labels
+				// Remove old status labels
 				for (const label of ['committed', 'reviewed', 'needs_help']) {
 					if (current.labels?.includes(label)) {
 						await execFileAsync(bdPath, ['label', 'remove', id, label], {
