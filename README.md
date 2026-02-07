@@ -3,6 +3,8 @@
 Misatay is a VS Code extension for working with AI agents. 
 When you build software with Misatay, you are __involved__ and __in charge__.
 
+(NOTE: It only works with GitHub Copilot.)
+
 When Misatay says "All done!", you actually believe it! You're ready to:
 - __Slam that merge button__, or
 - Pester your colleagues for PR approvals without shame, or
@@ -10,15 +12,13 @@ When Misatay says "All done!", you actually believe it! You're ready to:
 
 Because: You've already reviewed the code! You were there from the beginning!
 
-Features:
-- Planning
-- AI-guided code reviews
-- Task status tracking
-- AI asks for help instead of spinning on problems
+Your new dev loop:
+- Plan a feature with Misatay, then _save your plan to your repo_ → **Lose nothing when you switch AI session**
+- Let Misatay work on the plan's tasks and _commit its changes to Git_ → **Keep track of what changes go to what task**
+- AI-guided code reviews → **Misatay tells you what changed and why, in the context of a task**
+- Misatay asks for help instead of spinning on problems → **Save $$$ by wasting fewer tokens**
 
 Jump to [The Misatay Way](#the-misatay-way) for details!
-
-(NOTE: It only works with GitHub Copilot.)
 
 ## Installation
 
@@ -27,8 +27,6 @@ It's a VS Code extension. So install it from the marketplace.
 In repos where you haven't used Misatay, you have to initialize it. Open the command palette (Cmd-Shift-P) and choose "Misatay: Install Agent". This will add an agent prompt and some skills
 to your repo. (I hope to avoid this step in the future, by keep these files in the extension and
 out of your repo.)
-
-You are now ready to follow [The Misatay Way](#the-misatay-way).
 
 ## Recommended Settings
 
@@ -72,22 +70,29 @@ This brings us to the project's Manifesto:
 
 ## The Misatay Way
 
+_Before you start:_ You should think of Misatay as a pair-programmer that you've tasked with implementing
+a feature. Misatay will take a crack at all the tasks for this feature, but sooner or later you will 
+step in and review its code.
+
+Note that, like a human engineer, Misatay commits its changes to Git as it goes. So it is best to give it
+a feature branch to work on.
+
 **Step 1: Plan**
 
 First, open the Copilot Chat view in VS Code; then select Misatay as your agent.
 
 <img alt="Screenshot of Misatay selected as the agent in Copilot Chat" src="screenshots/select-misatay.png" width="650" />
 
-Now, break the project down into tasks -- with the AI's help.
+Now, break the project down into tasks — with the AI's help.
 
-Tasks are stored outside of the AI's context (by default, in the repo using Beads) so they are not lost.
+Tasks are stored outside of the AI's context (by default, in the repo using [Beads](https://github.com/steveyegge/beads)) so they are not lost.
 
 <img alt="Screenshot of the user asking Misatay to plan a project" src="screenshots/planning-chat.png" width="750" />
 
 **Step 2: Unleash**
 
-Let the AI start work. Misatay will keep track of its progress. And don't worry about losing track of its changes
-— Misatay knows which changes go with which tasks, and you can review them easily later.
+Let the AI start work. Misatay will keep track of its progress, by updating tasks and committing its changes
+to Git. And don't worry about losing track of its changes — Misatay knows which changes go with which tasks, and you can review them easily later.
 
 <img alt="Screenshot of the user telling Misatay to start work, and of the Task View showing all the tasks and their status" src="screenshots/task-view.png" width="750" />
 
@@ -98,7 +103,7 @@ Let the AI start work. Misatay will keep track of its progress. And don't worry 
 When you are ready to review some code, tell Misatay, and it will start a review session. Misatay
 walks you through the changes for a particular task, opening files and highlighting lines, and giving you a chance to comment or ask questions. All at _your_ pace!
 
-<img alt="Screenshot of the user doing a code-review with Misatay" src="screenshots/review.png" width="650" />
+<img alt="Screenshot of the user doing a code-review with Misatay" src="screenshots/review.png" width="750" />
 
 <br/>
 
@@ -117,13 +122,13 @@ Very often, AI agents will get stuck trying to fix something and just spin — w
 
 Not with Misatay! Misatay tells your agents to ask for help when they need it, using a special "needs help" task status to track this.
 
-<img alt="Screenshot of a task with 'needs help' status" src="screenshots/needs-help.png" width="650" />
+<img alt="Screenshot of a task with 'needs help' status" src="screenshots/needs-help.png" width="750" />
 
 ## Comparison
 
 ### Plain VS Code with Copilot
 
-The diff-based review experience provided in VS Code's Copilot Chat is _excellent_ --- but it doesn't scale to big projects.
+The diff-based review experience provided in VS Code's Copilot Chat is _excellent_ — but it doesn't scale to big projects.
 If, for example, you tell Copilot "Go make me a Minecraft" (and you've pre-approved all the tools it needs), then let it run
 for an hour, you'll come back to a pile of new code that you won't want to review.
 
@@ -151,7 +156,7 @@ inference slowness. It takes minutes for any AI model to do a significant code c
 where the temptation to deploy fleets of agents comes from.
 
 But imagine that it takes your AI one second to "Build the authentication module with unit tests", rather than one minute. If we had this kind of
-performance --- if the user did not have to wait very long for the AI --- then I think that the Misatay approach to AI coding would be quite
+performance — if the user did not have to wait very long for the AI — then I think that the Misatay approach to AI coding would be quite
 competitive with hand-coding and agent fleets.
 
 Sadly, we don't have this yet. But perhaps in the near future?
