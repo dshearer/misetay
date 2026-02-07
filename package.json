@@ -65,7 +65,8 @@
                 "ready",
                 "in_progress",
                 "committed",
-                "reviewed"
+                "reviewed",
+                "needs_help"
               ],
               "description": "Initial status of the task (default: ready)"
             }
@@ -107,7 +108,8 @@
                     "ready",
                     "in_progress",
                     "committed",
-                    "reviewed"
+                    "reviewed",
+                    "needs_help"
                   ],
                   "description": "New status"
                 }
@@ -136,7 +138,8 @@
                 "ready",
                 "in_progress",
                 "committed",
-                "reviewed"
+                "reviewed",
+                "needs_help"
               ],
               "description": "Filter by status"
             }

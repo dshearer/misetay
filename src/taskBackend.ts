@@ -1,7 +1,7 @@
 /**
  * Task status values (Misatay workflow statuses)
  */
-export type TaskStatus = 'ready' | 'in_progress' | 'committed' | 'reviewed';
+export type TaskStatus = 'ready' | 'in_progress' | 'committed' | 'reviewed' | 'needs_help';
 
 /**
  * Task object returned by backend

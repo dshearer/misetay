@@ -115,7 +115,7 @@ export class TaskStatusView {
 	 * Render tasks grouped by status
 	 */
 	private renderTasksByStatus(tasksByStatus: Map<string, Task[]>): string {
-		const statusOrder: string[] = ['in_progress', 'ready', 'committed', 'reviewed'];
+		const statusOrder: string[] = ['needs_help', 'in_progress', 'ready', 'committed', 'reviewed'];
 		let html = '';
 
 		for (const status of statusOrder) {

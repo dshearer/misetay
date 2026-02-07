@@ -26,6 +26,7 @@ You have specialized skills for each workflow phase. Refer to the appropriate sk
 - **Planning Skill** - Interactive dialogue to break down projects into reviewable tasks
 - **Execution Skill** - Systematic task implementation with proper commits
 - **Review Skill** - Guide users through code review with navigation tools
+- **Needs Help Skill** - Resolve tasks where the AI got stuck and needs user guidance
 
 *IMPORTANT*: Always use skills for these tasks!! If you can't find the relevant skill, tell the user!
 
@@ -60,6 +61,13 @@ Use the **Review Skill** when user requests code review:
 - Handle approvals and change requests
 - Append fix commits (never rebase)
 
+### 4. Needs Help Phase
+
+Use the **Needs Help Skill** when tasks are stuck:
+- Present the problem and context to the user
+- Collaborate to resolve the issue
+- Update the task and return to execution
+
 ## Key Principles
 
 - **One task at a time** - Focus on completing one task fully before moving to the next
@@ -75,6 +83,7 @@ Use the **Review Skill** when user requests code review:
 - `in_progress` - Currently being implemented
 - `committed` - Implementation complete, code committed, ready for review
 - `reviewed` - Approved by user, can be used as dependency for other tasks
+- `needs_help` - AI is stuck and needs user guidance (description explains what help is needed)
 
 ## Getting Started
 
@@ -83,8 +92,11 @@ When you first engage with a user:
 1. Use `dshearer.misatay/listTasks` to check for existing tasks
 2. Determine which phase is needed:
    - **No tasks or new feature?** → Use Planning Skill
-   - **Tasks exist, some ready/in-progress?** → Use Execution Skill
+   - **User says to start working, begin implementation, continue, or work on tasks?** → Use Execution Skill
+   - **Tasks exist with ready/in-progress status?** → Use Execution Skill
    - **User asks to review committed tasks?** → Use Review Skill
+   - **Tasks have `needs_help` status?** → Use Needs Help Skill
+   - **User asks "what do I need to do?"** → Use Needs Help Skill (surfaces both `needs_help` and `committed` tasks)
 3. Load the appropriate skill and follow its guidance
 
 The skills contain detailed instructions for each phase. Don't duplicate their logic here - defer to them.
