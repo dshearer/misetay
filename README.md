@@ -11,7 +11,7 @@ Because: You've already reviewed the code! You were there from the beginning!
 
 ## Project Status
 
-This is an experiment, although I do try to make Misetay useful for real work.
+This is an _experiment_, although I do try to make Misetay useful for real work.
 
 I am interested in finding ways to use AI in software development that _keep the engineer in the driver's seat_. Do you have ideas? **Open an issue!**
 
@@ -19,15 +19,9 @@ This brings us to the project's Manifesto:
 
 ## Manifesto
 
-To make the best use of AI, AIs and people need to work side-by-side.
+### Vision
 
-### The Non-Future
-
-- Swarms of agents are fun to play with but **they are not the future of work**
-- Businesses will not put up with things running around doing God-knows-what and **no one to blame** when things go wrong
-
-### The Future
-
+- To make the best use of AI, AIs and people need to work side-by-side.
 - AI will boost productivity by **empowering human workers**, to __understand more__ and to __build more__
 
 ### Project Goals
@@ -41,10 +35,13 @@ To make the best use of AI, AIs and people need to work side-by-side.
 
 **Step 1: Plan**
 
-Break the project down into tasks -- with the AI's help.
+First, open the Copilot Chat view in VS Code; then select Misetay as your agent.
 
-Tasks are stored outside of the AI's context (by default, in the repo using Beads) so
-that they are not lost.
+<img alt="Screenshot of Misetay selected as the agent in Copilot Chat" src="screenshots/select-misetay.png" width="650" />
+
+Now, break the project down into tasks -- with the AI's help.
+
+Tasks are stored outside of the AI's context (by default, in the repo using Beads) so they are not lost.
 
 <img alt="Screenshot of the user asking Misetay to plan a project" src="screenshots/planning-chat.png" width="400" />
 
@@ -54,6 +51,8 @@ Let the AI start work. Misetay will keep track of its progress. And don't worry 
 --- Misetay knows which changes go with which tasks, and you can review them easily later.
 
 <img alt="Screenshot of the user telling Misetay to start work, and of the Task View showing all the tasks and their status" src="screenshots/task-view.png" width="750" />
+
+(You can open the Task view by choosing "Misetay: Show Task Status" from the command palette.)
 
 **Step 3: Understand**
 
@@ -112,7 +111,7 @@ Sadly, we don't have this yet. But perhaps in the near future?
 
 ### Required Extensions
 
-- **GitHub Copilot**: Provides the AI agent and code generation capabilities
+**GitHub Copilot**: Provides the AI agent and code generation capabilities
 
 ### Task Backend
 

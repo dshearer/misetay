@@ -66,11 +66,12 @@ export function activate(context: vscode.ExtensionContext) {
 		);
 	}
 
-	// Initialize task status view
+	// Initialize task status view and show it automatically
 	const taskStatusView = new TaskStatusView(context, () => taskBackend);
 	context.subscriptions.push({
 		dispose: () => taskStatusView.dispose()
 	});
+	taskStatusView.show();
 
 	// Register task management tools
 	registerTaskTools(context, () => taskBackend);
