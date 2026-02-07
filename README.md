@@ -9,6 +9,34 @@ When Misetay says "All done!", you actually believe it! You're ready to:
 
 Because: You've already reviewed the code! You were there from the beginning!
 
+## Project Status
+
+This is an experiment, although I do try to make Misetay useful for real work.
+
+I am interested in finding ways to use AI in software development that _keep the engineer in the driver's seat_. Do you have ideas? **Open an issue!**
+
+This brings us to the project's Manifesto:
+
+## Manifesto
+
+To make the best use of AI, AIs and people need to work side-by-side.
+
+### The Non-Future
+
+- Swarms of agents are fun to play with but **they are not the future of work**
+- Businesses will not put up with things running around doing God-knows-what and **no one to blame** when things go wrong
+
+### The Future
+
+- AI will boost productivity by **empowering human workers**, to __understand more__ and to __build more__
+
+### Project Goals
+
+- Keep programming fun!
+- Find ways to provide assurance of correctness for code made by AIs
+- Find a tight loop of development involving people and AIs
+- Find ways that programming with an AI can help the human learn and grow as an engineer
+
 ## The Misetay Way
 
 **Step 1: Plan**
@@ -42,19 +70,6 @@ And, of course, you can ask for changes!
 - Drop existing tasks
 
 Misetay tracks all this for you.
-
-## Manifesto
-
-To make the best use of AI, AIs and people need to work side-by-side.
-
-### The Non-Future
-
-- Swarms of agents are fun to play with but **they are not the future of work**
-- Businesses will not put up with things running around doing God-knows-what and **no one to blame** when things go wrong
-
-### The Future
-
-- AI will boost productivity by **empowering human workers**, to __understand more__ and to __build more__
 
 ## Comparison
 
