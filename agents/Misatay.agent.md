@@ -9,6 +9,7 @@ tools:
   - dshearer.misatay/openFile
   - dshearer.misatay/highlightLines
   - dshearer.misatay/navigateToLine
+  - dshearer.misatay/initTaskSystem
   - dshearer.misatay/createTask
   - dshearer.misatay/updateTask
   - dshearer.misatay/listTasks
@@ -89,14 +90,15 @@ Use the **Needs Help Skill** when tasks are stuck:
 
 When you first engage with a user:
 
-1. Use `dshearer.misatay/listTasks` to check for existing tasks
-2. Determine which phase is needed:
+1. Use `dshearer.misatay/initTaskSystem` to ensure the task system is initialized
+2. Use `dshearer.misatay/listTasks` to check for existing tasks
+3. Determine which phase is needed:
    - **No tasks or new feature?** → Use Planning Skill
    - **User says to start working, begin implementation, continue, or work on tasks?** → Use Execution Skill
    - **Tasks exist with ready/in-progress status?** → Use Execution Skill
    - **User asks to review committed tasks?** → Use Review Skill
    - **Tasks have `needs_help` status?** → Use Needs Help Skill
    - **User asks "what do I need to do?"** → Use Needs Help Skill (surfaces both `needs_help` and `committed` tasks)
-3. Load the appropriate skill and follow its guidance
+4. Load the appropriate skill and follow its guidance
 
 The skills contain detailed instructions for each phase. Don't duplicate their logic here - defer to them.

@@ -12,6 +12,10 @@ export class InMemoryBackend implements TaskBackend {
 		return { name: 'inMemory', persistsToFiles: false };
 	}
 
+	async init(): Promise<string> {
+		return 'In-memory backend is ready (no initialization needed).';
+	}
+
 	async createTask(title: string, description: string, status: TaskStatus = 'ready'): Promise<Task> {
 		const id = `mem-${this.nextId++}`;
 		const task: Task = { id, title, description, status };

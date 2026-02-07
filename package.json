@@ -244,6 +244,18 @@
         }
       },
       {
+        "name": "misatay_initTaskSystem",
+        "displayName": "Initialize Task System",
+        "toolReferenceName": "initTaskSystem",
+        "modelDescription": "Initializes the task system for the current workspace. For the Beads backend, this runs 'bd init' to create the .beads/ directory. Call this before creating tasks if the task system has not been set up yet. Safe to call if already initialized.",
+        "userDescription": "Initialize the task system in the current workspace",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
         "name": "misatay_backendInfo",
         "displayName": "Backend Info",
         "toolReferenceName": "backendInfo",

@@ -114,6 +114,28 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 		}
 	});
 
+	// Register initTaskSystem tool
+	const initTaskSystemTool = vscode.lm.registerTool('misatay_initTaskSystem', {
+		async invoke(options, token) {
+			try {
+				const result = await getBackend().init();
+				return new vscode.LanguageModelToolResult([
+					new vscode.LanguageModelTextPart(result)
+				]);
+			} catch (error: any) {
+				return new vscode.LanguageModelToolResult([
+					new vscode.LanguageModelTextPart(`Error initializing task system: ${error.message}`)
+				]);
+			}
+		},
+
+		prepareInvocation(options, token) {
+			return {
+				invocationMessage: 'Initializing task system'
+			};
+		}
+	});
+
 	// Register backendInfo tool
 	const backendInfoTool = vscode.lm.registerTool('misatay_backendInfo', {
 		async invoke(options, token) {
@@ -130,8 +152,8 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 		}
 	});
 
-	context.subscriptions.push(createTaskTool, updateTaskTool, listTasksTool, addDependencyTool, backendInfoTool);
-	console.log('Misatay: Registered 5 task management tools');
+	context.subscriptions.push(createTaskTool, updateTaskTool, listTasksTool, addDependencyTool, initTaskSystemTool, backendInfoTool);
+	console.log('Misatay: Registered 6 task management tools');
 	
 	// List all available tools to verify registration
 	setTimeout(() => {

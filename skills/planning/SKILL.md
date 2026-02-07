@@ -78,6 +78,8 @@ Does this breakdown make sense? Any tasks to add, remove, or split?
 
 Once the user approves, create tasks using the tools:
 
+**First**, call `dshearer.misatay/initTaskSystem` to ensure the task system is initialized in the workspace. This is safe to call even if already initialized.
+
 **For each task in the approved breakdown:**
 
 1. **Create the task** using `dshearer.misatay/createTask`:

@@ -32,6 +32,13 @@ export interface TaskBackend {
 	backendInfo(): BackendInfo;
 
 	/**
+	 * Initialize the task backend for the current workspace.
+	 * For backends that persist to files, this creates the necessary
+	 * directory structure. No-op if already initialized.
+	 */
+	init(): Promise<string>;
+
+	/**
 	 * Create a new task
 	 */
 	createTask(title: string, description: string, status?: TaskStatus): Promise<Task>;

@@ -41,6 +41,21 @@ export class BeadsBackend implements TaskBackend {
 		return { name: 'beads', persistsToFiles: true };
 	}
 
+	async init(): Promise<string> {
+		try {
+			const { stdout } = await execFileAsync(bdPath, ['init'], {
+				cwd: this.workspaceRoot
+			});
+			return stdout.trim() || 'Beads initialized successfully.';
+		} catch (error: any) {
+			// bd init may fail if already initialized - that's ok
+			if (error.message?.includes('already initialized')) {
+				return 'Beads is already initialized in this workspace.';
+			}
+			throw new Error(`Failed to initialize Beads: ${error.message}`);
+		}
+	}
+
 	/**
 	 * Map Misatay status to Beads status and labels
 	 */
