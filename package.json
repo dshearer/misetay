@@ -3,6 +3,7 @@
   "displayName": "Misatay",
   "publisher": "dshearer",
   "description": "AI coding assistant",
+  "icon": "logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/dshearer/misatay.git"
