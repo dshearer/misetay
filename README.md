@@ -91,6 +91,7 @@ Misetay tracks all this for you.
 - The AI marks tasks as "need-help" (or something) when it needs guidance from
 the user or otherwise gets stuck
 - Yolo mode: The AI plows through tasks, instead of stopping and asking what to do
+- Find ways to integration stuff like [OpenSpec](https://openspec.dev)
 - ?
 
 ## Comparison
