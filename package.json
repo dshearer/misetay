@@ -248,6 +248,18 @@
           "type": "object",
           "properties": {}
         }
+      },
+      {
+        "name": "misetay_clearHighlights",
+        "displayName": "Clear Highlights",
+        "toolReferenceName": "clearHighlights",
+        "modelDescription": "Clears any line highlights previously applied by highlightLines. Call this after code review to remove visual decorations.",
+        "userDescription": "Clear line highlights in the active editor",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
       }
     ]
   },

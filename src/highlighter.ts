@@ -3,17 +3,6 @@ import * as vscode from "vscode";
 export class Highlighter {
     private highlightDecoration: vscode.TextEditorDecorationType | undefined;
 
-    private clampLine(line: number, document: vscode.TextDocument): number {
-        const maxLine = document.lineCount;
-        if (line < 1) {
-            return 1;
-        }
-        if (line > maxLine) {
-            return maxLine;
-        }
-        return line;
-    }
-
     clearHighlights() {
         if (this.highlightDecoration) {
             this.highlightDecoration.dispose();
