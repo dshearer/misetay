@@ -1,7 +1,7 @@
 # Misetay - AI Agent Tool that Keeps You in the Loop
 
 Misetay is a VS Code extension for working with AI agents. 
-When you build software with Misetay, you are __involved__ and __in charge__. 
+When you build software with Misetay, you are __involved__ and __in charge__.
 
 When Misetay says "All done!", you actually believe it! You're ready to:
 - __Slam that merge button__, or
@@ -13,6 +13,16 @@ Because: You've already reviewed the code! You were there from the beginning!
 Jump to [The Misetay Way](#the-misetay-way) to see the features.
 
 (NOTE: It only works with GitHub Copilot.)
+
+## Installation
+
+It's a VS Code extension. So install it from the marketplace.
+
+In repos where you haven't used Misetay, you have to initialize it. Open the command palette (Cmd-Shift-P) and choose "Misetay: Install Agent". This will add an agent prompt and some skills
+to your repo. (I hope to avoid this step in the future, by keep these files in the extension and
+out of your repo.)
+
+You are now ready to follow [The Misetay Way](#the-misetay-way).
 
 ## Project Status
 
@@ -57,7 +67,7 @@ Let the AI start work. Misetay will keep track of its progress. And don't worry 
 
 <img alt="Screenshot of the user telling Misetay to start work, and of the Task View showing all the tasks and their status" src="screenshots/task-view.png" width="750" />
 
-(You can open the Task view by choosing "Misetay: Show Task Status" from the command palette.)
+(You can open the Task view by choosing "Misetay: Show Task Status" from the command palette (Cmd-Shift-P).)
 
 **Step 3: Understand**
 
@@ -74,6 +84,15 @@ And, of course, you can ask for changes!
 - Drop existing tasks
 
 Misetay tracks all this for you.
+
+## Coming Soon?
+
+- Reverse workflow: _you_ do the coding, and the _AI_ does the reviewing
+- The AI marks tasks as "need-help" (or something) when it needs guidance from
+the user or otherwise gets stuck
+- Yolo mode: The AI plows through tasks, instead of stopping and asking what to do
+- Find ways to integration stuff like [OpenSpec](https://openspec.dev)
+- ?
 
 ## Comparison
 
