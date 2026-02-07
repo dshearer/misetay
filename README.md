@@ -38,7 +38,7 @@ This setting controls the delay (in seconds) after which changes made by the AI 
 We recommend setting this to a value greater than 0 to allow Misatay to work more efficiently. This gives you time to review changes while they're being made, but automatically accepts them after the delay if you don't intervene.
 
 To configure this setting:
-1. Open VS Code Settings (Cmd-, or Ctrl-,)
+1. Open VS Code Settings (Cmd+, or Ctrl+,)
 2. Search for "copilot.agent.autoAcceptDelay"
 3. Set the value to your preferred delay (e.g., 5)
 
