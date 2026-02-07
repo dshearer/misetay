@@ -66,6 +66,7 @@
                 "in_progress",
                 "committed",
                 "reviewed",
+                "blocked",
                 "needs_help"
               ],
               "description": "Initial status of the task (default: ready)"
@@ -109,6 +110,7 @@
                     "in_progress",
                     "committed",
                     "reviewed",
+                    "blocked",
                     "needs_help"
                   ],
                   "description": "New status"
@@ -139,6 +141,7 @@
                 "in_progress",
                 "committed",
                 "reviewed",
+                "blocked",
                 "needs_help"
               ],
               "description": "Filter by status"
@@ -150,7 +153,7 @@
         "name": "misatay_addDependency",
         "displayName": "Add Task Dependency",
         "toolReferenceName": "addDependency",
-        "modelDescription": "Records that childId task depends on parentId task. Child cannot start until parent is committed.",
+        "modelDescription": "Records that childId depends on parentId. If parentId is not yet committed, childId is automatically set to blocked status.",
         "userDescription": "Add a dependency between tasks",
         "canBeReferencedInPrompt": true,
         "inputSchema": {

@@ -50,7 +50,8 @@ export class BeadsBackend implements TaskBackend {
 				return { status: 'open' };
 			case 'in_progress':
 				return { status: 'in_progress' };
-
+			case 'blocked':
+				return { status: 'blocked' };
 			case 'committed':
 				return { status: 'closed', label: 'committed' };
 			case 'reviewed':
@@ -75,6 +76,9 @@ export class BeadsBackend implements TaskBackend {
 		}
 		if (beadsStatus === 'in_progress') {
 			return 'in_progress';
+		}
+		if (beadsStatus === 'blocked') {
+			return 'blocked';
 		}
 		// open with needs_help label
 		if (labels?.includes('needs_help')) {
@@ -137,6 +141,12 @@ export class BeadsBackend implements TaskBackend {
 					cwd: this.workspaceRoot
 				});
 				const current = JSON.parse(currentData)[0]; // bd show returns an array
+				const currentMisatayStatus = this.fromBeadsStatus(current.status, current.labels);
+
+				// Guard: reject blocked → in_progress
+				if (updates.status === 'in_progress' && currentMisatayStatus === 'blocked') {
+					throw new Error(`Cannot start task ${id}: task is blocked by incomplete dependencies`);
+				}
 
 				// Remove old status labels
 				for (const label of ['committed', 'reviewed', 'needs_help']) {
@@ -186,7 +196,12 @@ export class BeadsBackend implements TaskBackend {
 			const taskData = taskDataArray[0]; // bd show returns an array
 			// Extract dependency IDs from dependency objects
 			const dependencies = taskData.dependencies?.map((dep: any) => dep.id);
-			
+
+			// Auto-unblock dependents when task becomes committed or reviewed
+			if (updates.status === 'committed' || updates.status === 'reviewed') {
+				await this.unblockDependents(id);
+			}
+
 			return {
 				id: taskData.id,
 				title: taskData.title,
@@ -197,6 +212,56 @@ export class BeadsBackend implements TaskBackend {
 		} catch (error: any) {
 			throw new Error(`Failed to update task ${id} with Beads: ${error.message}`);
 		}
+	}
+
+	private async unblockDependents(completedTaskId: string): Promise<void> {
+		// List all tasks and find those depending on the completed task
+		const { stdout } = await execFileAsync(bdPath, ['--json', 'list', '--all'], {
+			cwd: this.workspaceRoot
+		});
+		if (!stdout.trim()) {
+			return;
+		}
+
+		const allTasks = JSON.parse(stdout);
+		for (const t of allTasks) {
+			if (t.status !== 'blocked' || !t.dependency_count) {
+				continue;
+			}
+
+			// Fetch full details to check dependencies
+			const { stdout: detailStdout } = await execFileAsync(bdPath, ['--json', 'show', t.id], {
+				cwd: this.workspaceRoot
+			});
+			const detailed = JSON.parse(detailStdout)[0];
+			const depIds = detailed.dependencies?.map((d: any) => d.id) || [];
+
+			if (!depIds.includes(completedTaskId)) {
+				continue;
+			}
+
+			// Check if all dependencies are met
+			const allMet = await this.allDependenciesMet(detailed.dependencies || []);
+			if (allMet) {
+				await execFileAsync(bdPath, ['update', t.id, '-s', 'open'], {
+					cwd: this.workspaceRoot
+				});
+			}
+		}
+	}
+
+	private async allDependenciesMet(dependencies: any[]): Promise<boolean> {
+		for (const dep of dependencies) {
+			const { stdout } = await execFileAsync(bdPath, ['--json', 'show', dep.id], {
+				cwd: this.workspaceRoot
+			});
+			const task = JSON.parse(stdout)[0];
+			const status = this.fromBeadsStatus(task.status, task.labels);
+			if (status !== 'committed' && status !== 'reviewed') {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	async listTasks(filters?: { status?: TaskStatus }): Promise<Task[]> {
@@ -269,6 +334,27 @@ export class BeadsBackend implements TaskBackend {
 			await execFileAsync(bdPath, ['dep', 'add', childId, parentId], {
 				cwd: this.workspaceRoot
 			});
+
+			// Auto-block: check if parent is incomplete, block child if needed
+			const { stdout: parentData } = await execFileAsync(bdPath, ['--json', 'show', parentId], {
+				cwd: this.workspaceRoot
+			});
+			const parent = JSON.parse(parentData)[0];
+			const parentStatus = this.fromBeadsStatus(parent.status, parent.labels);
+
+			if (parentStatus !== 'committed' && parentStatus !== 'reviewed') {
+				const { stdout: childData } = await execFileAsync(bdPath, ['--json', 'show', childId], {
+					cwd: this.workspaceRoot
+				});
+				const child = JSON.parse(childData)[0];
+				const childStatus = this.fromBeadsStatus(child.status, child.labels);
+
+				if (childStatus === 'ready') {
+					await execFileAsync(bdPath, ['update', childId, '-s', 'blocked'], {
+						cwd: this.workspaceRoot
+					});
+				}
+			}
 		} catch (error: any) {
 			throw new Error(`Failed to add dependency with Beads: ${error.message}`);
 		}

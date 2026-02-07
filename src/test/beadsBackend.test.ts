@@ -162,14 +162,107 @@ test('addDependency supports multiple dependencies', async () => {
 		const parent1 = await backend.createTask('Parent 1', 'Desc', 'ready');
 		const parent2 = await backend.createTask('Parent 2', 'Desc', 'ready');
 		const child = await backend.createTask('Child', 'Desc', 'ready');
-		
+
 		await backend.addDependency(child.id, parent1.id);
 		await backend.addDependency(child.id, parent2.id);
-		
+
 		const tasks = await backend.listTasks();
 		const childTask = tasks.find(t => t.id === child.id);
 		assert.strictEqual(childTask?.dependencies?.length, 2);
 		assert.ok(childTask?.dependencies?.includes(parent1.id));
 		assert.ok(childTask?.dependencies?.includes(parent2.id));
+	});
+
+test('addDependency blocks child when parent is incomplete', async () => {
+		const parent = await backend.createTask('Parent', 'Desc', 'ready');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		await backend.addDependency(child.id, parent.id);
+
+		const tasks = await backend.listTasks();
+		const childTask = tasks.find(t => t.id === child.id);
+		assert.strictEqual(childTask?.status, 'blocked');
+	});
+
+test('addDependency keeps child blocked when already blocked', async () => {
+		const p1 = await backend.createTask('Parent 1', 'Desc', 'ready');
+		const p2 = await backend.createTask('Parent 2', 'Desc', 'ready');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		// First dependency blocks the child
+		await backend.addDependency(child.id, p1.id);
+		let tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'blocked');
+
+		// Second dependency keeps it blocked
+		await backend.addDependency(child.id, p2.id);
+		tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'blocked');
+	});
+
+test('addDependency does not block child when parent is committed', async () => {
+		const parent = await backend.createTask('Parent', 'Desc', 'committed');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		await backend.addDependency(child.id, parent.id);
+
+		const tasks = await backend.listTasks();
+		const childTask = tasks.find(t => t.id === child.id);
+		assert.strictEqual(childTask?.status, 'ready');
+	});
+
+test('updateTask to committed unblocks dependents with all deps met', async () => {
+		const parent = await backend.createTask('Parent', 'Desc', 'ready');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		await backend.addDependency(child.id, parent.id);
+
+		// child should now be blocked
+		let tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'blocked');
+
+		// Complete the parent
+		await backend.updateTask(parent.id, { status: 'committed' });
+
+		tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'ready');
+	});
+
+test('updateTask keeps dependents blocked when not all deps are met', async function() {
+		this.timeout(30000);
+		const p1 = await backend.createTask('Parent 1', 'Desc', 'ready');
+		const p2 = await backend.createTask('Parent 2', 'Desc', 'ready');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		await backend.addDependency(child.id, p1.id);
+		await backend.addDependency(child.id, p2.id);
+
+		// child should be blocked
+		let tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'blocked');
+
+		// Complete only one parent
+		await backend.updateTask(p1.id, { status: 'committed' });
+
+		tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'blocked');
+
+		// Complete the second parent
+		await backend.updateTask(p2.id, { status: 'committed' });
+
+		tasks = await backend.listTasks();
+		assert.strictEqual(tasks.find(t => t.id === child.id)?.status, 'ready');
+	});
+
+test('reject blocked to in_progress transition', async () => {
+		const parent = await backend.createTask('Parent', 'Desc', 'ready');
+		const child = await backend.createTask('Child', 'Desc', 'ready');
+
+		await backend.addDependency(child.id, parent.id);
+
+		await assert.rejects(
+			() => backend.updateTask(child.id, { status: 'in_progress' }),
+			/Cannot start task.*blocked by incomplete dependencies/
+		);
 	});
 });

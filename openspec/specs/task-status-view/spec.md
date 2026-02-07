@@ -12,7 +12,7 @@ The view SHALL show all tasks from the task backend with visual status indicator
 
 #### Scenario: Viewing tasks with different statuses
 - **WHEN** task status view is open
-- **THEN** view displays tasks grouped or colored by status (needs_help, ready, in_progress, committed, reviewed)
+- **THEN** view displays tasks grouped or colored by status (needs_help, ready, in_progress, committed, reviewed, blocked)
 
 ### Requirement: View uses modern design aesthetic
 The view SHALL use contemporary design patterns including smooth animations, clear typography, and refined color palette.
@@ -22,7 +22,7 @@ The view SHALL use contemporary design patterns including smooth animations, cle
 - **THEN** view uses:
   - Smooth transitions and animations for status changes
   - Clear visual hierarchy with modern typography
-  - Thoughtful use of color for status indicators
+  - Thoughtful use of color for status indicators including orange for blocked tasks
   - Card-based or list-based layout with proper spacing
   - Responsive design that adapts to panel width
 
@@ -59,6 +59,17 @@ The view SHALL show helpful guidance when no tasks exist.
   - Friendly message like "No tasks yet"
   - Quick start instructions
   - Optional illustration or icon
+
+### Requirement: Blocked tasks have distinct visual styling
+The view SHALL display blocked tasks with distinct styling that differentiates them from ready tasks.
+
+#### Scenario: Blocked task card styling
+- **WHEN** a task has status `blocked`
+- **THEN** view renders the task card with an orange left border and orange status badge using `--vscode-charts-orange`
+
+#### Scenario: Blocked section grouping
+- **WHEN** blocked tasks exist
+- **THEN** view groups them in a "BLOCKED" section between "READY" and "COMMITTED" sections
 
 ### Requirement: View displays needs_help status with distinct styling
 The view SHALL display tasks with `needs_help` status using a distinct color and visual treatment that signals urgency.
