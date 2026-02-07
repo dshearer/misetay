@@ -8,7 +8,7 @@ import { Highlighter } from './highlighter';
 export function registerNavigationTools(context: vscode.ExtensionContext) {
 	
 	// Register openFile tool
-	const openFileTool = vscode.lm.registerTool('misetay_openFile', {
+	const openFileTool = vscode.lm.registerTool('misatay_openFile', {
 		async invoke(options, token) {
 			const { filePath: filePathInput, line } = options.input as { filePath: string; line?: number };
 
@@ -61,7 +61,7 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 	const highlighter = new Highlighter();
 
 	// Register highlightLines tool
-	const highlightLinesTool = vscode.lm.registerTool('misetay_highlightLines', {
+	const highlightLinesTool = vscode.lm.registerTool('misatay_highlightLines', {
 		async invoke(options, token) {
 			const { startLine, endLine } = options.input as { startLine: number; endLine: number };
 
@@ -101,7 +101,7 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 	});
 
 	// Register navigateToLine tool
-	const navigateToLineTool = vscode.lm.registerTool('misetay_navigateToLine', {
+	const navigateToLineTool = vscode.lm.registerTool('misatay_navigateToLine', {
 		async invoke(options, token) {
 			const { line } = options.input as { line: number };
 
@@ -140,7 +140,7 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 	});
 
 	// Register clearHighlights tool
-	const clearHighlights = vscode.lm.registerTool('misetay_clearHighlights', {
+	const clearHighlights = vscode.lm.registerTool('misatay_clearHighlights', {
 		async invoke(options, token) {
 			try {
 				highlighter.clearHighlights();
@@ -160,5 +160,5 @@ export function registerNavigationTools(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(openFileTool, highlightLinesTool, navigateToLineTool);
-	console.log('Misetay: Registered 3 navigation tools');
+	console.log('Misatay: Registered 3 navigation tools');
 }

@@ -1,11 +1,11 @@
 {
-  "name": "misetay",
-  "displayName": "Misetay",
+  "name": "misatay",
+  "displayName": "Misatay",
   "publisher": "dshearer",
   "description": "AI coding assistant",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dshearer/misetay.git"
+    "url": "https://github.com/dshearer/misatay.git"
   },
   "version": "0.1.0",
   "engines": {
@@ -20,9 +20,9 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
-      "title": "Misetay",
+      "title": "Misatay",
       "properties": {
-        "misetay.taskBackend": {
+        "misatay.taskBackend": {
           "type": "string",
           "enum": ["beads", "inMemory"],
           "default": "beads",
@@ -32,17 +32,17 @@
     },
     "commands": [
       {
-        "command": "misetay.installAgent",
-        "title": "Misetay: Install Agent"
+        "command": "misatay.installAgent",
+        "title": "Misatay: Install Agent"
       },
       {
-        "command": "misetay.showTaskStatus",
-        "title": "Misetay: Show Task Status"
+        "command": "misatay.showTaskStatus",
+        "title": "Misatay: Show Task Status"
       }
     ],
     "languageModelTools": [
       {
-        "name": "misetay_createTask",
+        "name": "misatay_createTask",
         "displayName": "Create Task",
         "toolReferenceName": "createTask",
         "modelDescription": "Creates a new task with a title, description, and optional status. Returns the task ID.",
@@ -77,7 +77,7 @@
         }
       },
       {
-        "name": "misetay_updateTask",
+        "name": "misatay_updateTask",
         "displayName": "Update Task",
         "toolReferenceName": "updateTask",
         "modelDescription": "Updates fields of an existing task by ID. Can update title, description, or status.",
@@ -121,7 +121,7 @@
         }
       },
       {
-        "name": "misetay_listTasks",
+        "name": "misatay_listTasks",
         "displayName": "List Tasks",
         "toolReferenceName": "listTasks",
         "modelDescription": "Lists all tasks, optionally filtered by status. Returns array of tasks.",
@@ -144,7 +144,7 @@
         }
       },
       {
-        "name": "misetay_addDependency",
+        "name": "misatay_addDependency",
         "displayName": "Add Task Dependency",
         "toolReferenceName": "addDependency",
         "modelDescription": "Records that childId task depends on parentId task. Child cannot start until parent is committed.",
@@ -169,7 +169,7 @@
         }
       },
       {
-        "name": "misetay_openFile",
+        "name": "misatay_openFile",
         "displayName": "Open File",
         "toolReferenceName": "openFile",
         "modelDescription": "Opens a file in the editor, optionally at a specific line number. Use for code review to show files.",
@@ -193,7 +193,7 @@
         }
       },
       {
-        "name": "misetay_highlightLines",
+        "name": "misatay_highlightLines",
         "displayName": "Highlight Lines",
         "toolReferenceName": "highlightLines",
         "modelDescription": "Highlights a range of lines in the active editor by selecting them. Use during code review to draw attention to specific code.",
@@ -218,7 +218,7 @@
         }
       },
       {
-        "name": "misetay_navigateToLine",
+        "name": "misatay_navigateToLine",
         "displayName": "Navigate to Line",
         "toolReferenceName": "navigateToLine",
         "modelDescription": "Scrolls the active editor to center a specific line in the viewport without reopening the file.",
@@ -238,7 +238,7 @@
         }
       },
       {
-        "name": "misetay_backendInfo",
+        "name": "misatay_backendInfo",
         "displayName": "Backend Info",
         "toolReferenceName": "backendInfo",
         "modelDescription": "Returns metadata about the active task backend, including its name and whether it persists to files. Call this before commit steps to decide whether to stage task state files.",
@@ -250,7 +250,7 @@
         }
       },
       {
-        "name": "misetay_clearHighlights",
+        "name": "misatay_clearHighlights",
         "displayName": "Clear Highlights",
         "toolReferenceName": "clearHighlights",
         "modelDescription": "Clears any line highlights previously applied by highlightLines. Call this after code review to remove visual decorations.",

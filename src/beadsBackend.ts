@@ -42,10 +42,10 @@ export class BeadsBackend implements TaskBackend {
 	}
 
 	/**
-	 * Map Misetay status to Beads status and labels
+	 * Map Misatay status to Beads status and labels
 	 */
-	private toBeadsStatusAndLabels(misetayStatus: TaskStatus): { status: string; label?: string } {
-		switch (misetayStatus) {
+	private toBeadsStatusAndLabels(misatayStatus: TaskStatus): { status: string; label?: string } {
+		switch (misatayStatus) {
 			case 'ready':
 				return { status: 'open' };
 			case 'in_progress':
@@ -59,7 +59,7 @@ export class BeadsBackend implements TaskBackend {
 	}
 
 	/**
-	 * Map Beads status to Misetay status (using labels to distinguish closed states)
+	 * Map Beads status to Misatay status (using labels to distinguish closed states)
 	 */
 	private fromBeadsStatus(beadsStatus: string, labels?: string[]): TaskStatus {
 		if (beadsStatus === 'closed') {

@@ -1,5 +1,5 @@
 ---
-name: misetay-execution
+name: misatay-execution
 description: Systematic task implementation with proper commits and status tracking
 ---
 
@@ -17,7 +17,7 @@ Use this skill when:
 
 ## Before Starting
 
-1. **List tasks** - Use `dshearer.misetay/listTasks` to see what needs to be done
+1. **List tasks** - Use `dshearer.misatay/listTasks` to see what needs to be done
 2. **Identify next task** - Find tasks with status "ready" (all dependencies satisfied)
 
 **IMPORTANT**: The git repo should not have uncommited changes. If it does, STOP and ask the user what to do.
@@ -31,7 +31,7 @@ For each task, follow this workflow:
 Before starting a task, verify all dependencies are complete:
 
 ```
-Use dshearer.misetay/listTasks to get all tasks
+Use dshearer.misatay/listTasks to get all tasks
 Check that all parent tasks (dependencies) of the current task have status "committed" or "reviewed"
 If dependencies are not complete, skip this task and find another ready task
 ```
@@ -43,7 +43,7 @@ If dependencies are not complete, skip this task and find another ready task
 When you begin working on a task:
 
 ```
-Use dshearer.misetay/updateTask:
+Use dshearer.misatay/updateTask:
 - taskId: the task ID
 - updates: { status: "in_progress" }
 ```
@@ -67,7 +67,7 @@ Make the code changes needed for this task:
 Once implementation is complete, update the task status BEFORE committing:
 
 ```
-Use dshearer.misetay/updateTask:
+Use dshearer.misatay/updateTask:
 - taskId: the task ID
 - updates: { status: "committed" }
 ```
@@ -76,7 +76,7 @@ This marks the task as complete in the backend.
 
 ### Step 5: Commit Changes and State Together
 
-Call `dshearer.misetay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
+Call `dshearer.misatay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
 
 ```bash
 # If persistsToFiles is true:
@@ -123,7 +123,7 @@ Ready to review? Or should I continue with the next task?"
 
 If user wants to continue (not review), loop back to Step 1:
 
-1. Check task list again with `dshearer.misetay/listTasks`
+1. Check task list again with `dshearer.misatay/listTasks`
 2. Find the next task with status "ready"
 3. Verify its dependencies
 4. Start the loop again

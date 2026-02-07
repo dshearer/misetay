@@ -3,33 +3,33 @@ The VS Code extension SHALL register custom tools for task operations.
 
 #### Scenario: createTask tool registration
 - **WHEN** extension activates
-- **THEN** extension registers dshearer.misetay/createTask tool
+- **THEN** extension registers dshearer.misatay/createTask tool
 
 #### Scenario: updateTask tool registration
 - **WHEN** extension activates
-- **THEN** extension registers dshearer.misetay/updateTask tool
+- **THEN** extension registers dshearer.misatay/updateTask tool
 
 #### Scenario: listTasks tool registration
 - **WHEN** extension activates
-- **THEN** extension registers dshearer.misetay/listTasks tool
+- **THEN** extension registers dshearer.misatay/listTasks tool
 
 #### Scenario: addDependency tool registration
 - **WHEN** extension activates
-- **THEN** extension registers dshearer.misetay/addDependency tool
+- **THEN** extension registers dshearer.misatay/addDependency tool
 
 ### Requirement: Tools delegate to pluggable backend
-The extension SHALL support multiple task backend implementations through an adapter interface. The active backend is determined by the `misetay.taskBackend` configuration setting.
+The extension SHALL support multiple task backend implementations through an adapter interface. The active backend is determined by the `misatay.taskBackend` configuration setting.
 
 #### Scenario: Backend adapter interface
 - **WHEN** extension needs to perform task operations
 - **THEN** extension delegates to configured backend adapter
 
 #### Scenario: Default Beads backend
-- **WHEN** `misetay.taskBackend` is not explicitly configured
+- **WHEN** `misatay.taskBackend` is not explicitly configured
 - **THEN** extension uses Beads CLI backend adapter
 
 #### Scenario: In-memory backend selected
-- **WHEN** `misetay.taskBackend` is set to "inMemory"
+- **WHEN** `misatay.taskBackend` is set to "inMemory"
 - **THEN** extension uses InMemoryBackend adapter
 
 ### Requirement: createTask returns task ID
@@ -88,11 +88,11 @@ Task state persistence SHALL depend on the active backend. File-backed backends 
 - **THEN** agent can call listTasks to retrieve tasks regardless of backend
 
 ### Requirement: Extension registers backendInfo tool
-The extension SHALL register a `misetay_backendInfo` language model tool that returns metadata about the active backend.
+The extension SHALL register a `misatay_backendInfo` language model tool that returns metadata about the active backend.
 
 #### Scenario: backendInfo tool registration
 - **WHEN** extension activates
-- **THEN** extension registers dshearer.misetay/backendInfo tool
+- **THEN** extension registers dshearer.misatay/backendInfo tool
 
 #### Scenario: Calling backendInfo with Beads backend
 - **WHEN** agent calls backendInfo and active backend is BeadsBackend

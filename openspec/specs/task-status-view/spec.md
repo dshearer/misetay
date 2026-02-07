@@ -4,7 +4,7 @@
 The extension SHALL provide a custom webview panel that displays tasks with a modern, polished UI.
 
 #### Scenario: User opens the task status view
-- **WHEN** user executes command "Misetay: Show Task Status"
+- **WHEN** user executes command "Misatay: Show Task Status"
 - **THEN** extension opens a webview panel with current task status
 
 ### Requirement: View displays all tasks with status indicators

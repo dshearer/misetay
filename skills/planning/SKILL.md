@@ -1,5 +1,5 @@
 ---
-name: misetay-planning
+name: misatay-planning
 description: Interactive planning dialogue to break down projects into reviewable tasks
 ---
 
@@ -80,13 +80,13 @@ Once the user approves, create tasks using the tools:
 
 **For each task in the approved breakdown:**
 
-1. **Create the task** using `dshearer.misetay/createTask`:
+1. **Create the task** using `dshearer.misatay/createTask`:
    - title: "Task Title"
    - description: "Detailed description of what needs to be done, why, and any relevant context"
    - status: "ready"
    - Returns: task ID (e.g., "bd-abc1")
 
-2. **Add dependencies if needed** using `dshearer.misetay/addDependency`:
+2. **Add dependencies if needed** using `dshearer.misatay/addDependency`:
    - childTaskId: The task that must wait
    - parentTaskId: The task that must be completed first
    - Only add when task B genuinely requires task A to be done first
@@ -100,7 +100,7 @@ Once the user approves, create tasks using the tools:
 
 ### Step 5: Commit Planning State
 
-After creating all tasks, call `dshearer.misetay/backendInfo` to check the backend type.
+After creating all tasks, call `dshearer.misatay/backendInfo` to check the backend type.
 
 **If `persistsToFiles` is true:** Commit the task state to Git:
 
@@ -117,7 +117,7 @@ This creates a commit containing the `.beads/issues.jsonl` changes from planning
 
 After creating the plan (and committing if applicable):
 
-1. List the created tasks to confirm they're in the system using `dshearer.misetay/listTasks`
+1. List the created tasks to confirm they're in the system using `dshearer.misatay/listTasks`
 
 2. Present a summary to the user:
    ```

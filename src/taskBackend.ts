@@ -1,5 +1,5 @@
 /**
- * Task status values (Misetay workflow statuses)
+ * Task status values (Misatay workflow statuses)
  */
 export type TaskStatus = 'ready' | 'in_progress' | 'committed' | 'reviewed';
 

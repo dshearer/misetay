@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Initialize task backend based on setting
 	const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
 	if (!workspaceRoot) {
-		vscode.window.showWarningMessage('Misetay: No workspace folder open');
+		vscode.window.showWarningMessage('Misatay: No workspace folder open');
 		return;
 	}
 
@@ -57,12 +57,12 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	let taskBackend = createBackend(
-		vscode.workspace.getConfiguration('misetay').get<string>('taskBackend', 'beads')
+		vscode.workspace.getConfiguration('misatay').get<string>('taskBackend', 'beads')
 	);
 
 	if (taskBackend.backendInfo().name === 'inMemory') {
 		vscode.window.showInformationMessage(
-			'Misetay is using in-memory task storage. Tasks will be lost when VS Code restarts. Install Beads CLI for persistent task tracking.'
+			'Misatay is using in-memory task storage. Tasks will be lost when VS Code restarts. Install Beads CLI for persistent task tracking.'
 		);
 	}
 
@@ -79,12 +79,12 @@ export function activate(context: vscode.ExtensionContext) {
 	// Hot-swap backend when setting changes
 	context.subscriptions.push(
 		vscode.workspace.onDidChangeConfiguration(e => {
-			if (e.affectsConfiguration('misetay.taskBackend')) {
-				const newSetting = vscode.workspace.getConfiguration('misetay').get<string>('taskBackend', 'beads');
+			if (e.affectsConfiguration('misatay.taskBackend')) {
+				const newSetting = vscode.workspace.getConfiguration('misatay').get<string>('taskBackend', 'beads');
 				taskBackend = createBackend(newSetting);
 				const info = taskBackend.backendInfo();
 				vscode.window.showInformationMessage(
-					`Misetay: Switched to ${info.name} backend.${info.persistsToFiles ? '' : ' Tasks will not persist across sessions.'}`
+					`Misatay: Switched to ${info.name} backend.${info.persistsToFiles ? '' : ' Tasks will not persist across sessions.'}`
 				);
 				taskStatusView.refresh();
 			}
@@ -95,12 +95,12 @@ export function activate(context: vscode.ExtensionContext) {
 	registerNavigationTools(context);
 
 	// Register Show Task Status command
-	const showTaskStatusCommand = vscode.commands.registerCommand('misetay.showTaskStatus', async () => {
+	const showTaskStatusCommand = vscode.commands.registerCommand('misatay.showTaskStatus', async () => {
 		await taskStatusView.show();
 	});
 
 	// Register Install Agent command
-	const installAgentCommand = vscode.commands.registerCommand('misetay.installAgent', async () => {
+	const installAgentCommand = vscode.commands.registerCommand('misatay.installAgent', async () => {
 		if (!workspaceRoot) {
 			vscode.window.showErrorMessage('No workspace folder is open. Please open a folder first.');
 			return;
@@ -112,12 +112,12 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(githubAgentsDir, { recursive: true });
 		}
 
-		// Copy agents/Misetay.agent.md to .github/agents/Misetay.agent.md
-		const sourceAgentFile = path.join(context.extensionPath, 'agents', 'Misetay.agent.md');
-		const targetAgentFile = path.join(githubAgentsDir, 'Misetay.agent.md');
+		// Copy agents/Misatay.agent.md to .github/agents/Misatay.agent.md
+		const sourceAgentFile = path.join(context.extensionPath, 'agents', 'Misatay.agent.md');
+		const targetAgentFile = path.join(githubAgentsDir, 'Misatay.agent.md');
 		
 		if (!fs.existsSync(sourceAgentFile)) {
-			vscode.window.showErrorMessage('Agent file not found in extension. Please reinstall Misetay.');
+			vscode.window.showErrorMessage('Agent file not found in extension. Please reinstall Misatay.');
 			return;
 		}
 
@@ -138,7 +138,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		vscode.window.showInformationMessage(
-			'Misetay agent and skills installed successfully! Reload VS Code to use the @misetay agent in GitHub Copilot chat.',
+			'Misatay agent and skills installed successfully! Reload VS Code to use the @misatay agent in GitHub Copilot chat.',
 			'Reload Window'
 		).then(selection => {
 			if (selection === 'Reload Window') {

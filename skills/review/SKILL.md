@@ -1,5 +1,5 @@
 ---
-name: misetay-review
+name: misatay-review
 description: Guided code review flow with file navigation and approval handling
 ---
 
@@ -20,7 +20,7 @@ Use this skill when:
 Think of this as a "tour" of the changes you made for a task. Your first job is to plan the tour as a series of "stops"
 based on your code changes shown in the task commits.
 
-*IMPORTANT*: When you are done with a tour, call the `dshearer.misetay/clearHighlights` tool.
+*IMPORTANT*: When you are done with a tour, call the `dshearer.misatay/clearHighlights` tool.
 
 ### Phase 1: Plan the Tour
 
@@ -74,9 +74,9 @@ Very important rules:
 Once the user has confirmed that they are ready for the tour, follow these steps for each of the stops
 in your tour plan (in order):
 
-1. Open the file with the `dshearer.misetay/openFile` tool
-2. Highlight the line range using the `dshearer.misetay/highlightLines` tool
-3. Make the line range visible with the `dshearer.misetay/navigateToLine` tool
+1. Open the file with the `dshearer.misatay/openFile` tool
+2. Highlight the line range using the `dshearer.misatay/highlightLines` tool
+3. Make the line range visible with the `dshearer.misatay/navigateToLine` tool
 4. Say what you planned to say about the code. Make sure it fits in your broader narrative. Tell the user
 what this code does and why it matters.
 5. Before moving to the next stop, check off the todo item corresponding to this stop (with the `todo` tool)
@@ -107,8 +107,8 @@ When the user asks a question during a tour:
 ```
 Let me show you what changed in src/components/Button.tsx...
 
-[Opens file with dshearer.misetay/openFile]
-[Highlights lines 45-67 with dshearer.misetay/highlightLines]
+[Opens file with dshearer.misatay/openFile]
+[Highlights lines 45-67 with dshearer.misatay/highlightLines]
 
 I've updated the Button component to use theme colors from the ThemeContext. 
 The main change is on lines 45-67 where the button now reads from the 
@@ -145,7 +145,7 @@ If user says something like:
 
 **Then:**
 
-1. **Mark task as reviewed** using `dshearer.misetay/updateTask`:
+1. **Mark task as reviewed** using `dshearer.misatay/updateTask`:
    - taskId: the task ID
    - updates: { status: "reviewed" }
 
@@ -160,7 +160,7 @@ If user requests modifications or points out issues:
 
 **Then:**
 
-1. **Update task status to in_progress** using `dshearer.misetay/updateTask`:
+1. **Update task status to in_progress** using `dshearer.misatay/updateTask`:
    - taskId: the task ID
    - updates: { status: "in_progress" }
 
@@ -168,13 +168,13 @@ If user requests modifications or points out issues:
    - Address the user's feedback
    - Make focused changes only
 
-3. **Mark task as committed** using `dshearer.misetay/updateTask`:
+3. **Mark task as committed** using `dshearer.misatay/updateTask`:
    - taskId: the task ID
    - updates: { status: "committed" }
 
 4. **Commit the fix** with a descriptive message:
 
-   Call `dshearer.misetay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
+   Call `dshearer.misatay/backendInfo`. If `persistsToFiles` is true, stage all changes (code + task state files). If `persistsToFiles` is false, stage only your code changes (not `.beads/`).
 
    ```bash
    # If persistsToFiles is true:
@@ -226,10 +226,10 @@ All three commits are part of task bd-xyz7. Each commit moves the task forward.
 
 ### Use Navigation Tools
 
-Always use the Misetay navigation tools:
-- `dshearer.misetay/openFile` - Opens a file
-- `dshearer.misetay/highlightLines` - Highlights a range of lines
-- `dshearer.misetay/navigateToLine` - Centers a line in the viewport
+Always use the Misatay navigation tools:
+- `dshearer.misatay/openFile` - Opens a file
+- `dshearer.misatay/highlightLines` - Highlights a range of lines
+- `dshearer.misatay/navigateToLine` - Centers a line in the viewport
 
 ### Explain, Don't Just Show
 

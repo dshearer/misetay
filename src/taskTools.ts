@@ -6,7 +6,7 @@ import { TaskBackend, Task, TaskStatus } from './taskBackend';
  */
 export function registerTaskTools(context: vscode.ExtensionContext, getBackend: () => TaskBackend) {
 	// Register createTask tool
-	const createTaskTool = vscode.lm.registerTool('misetay_createTask', {
+	const createTaskTool = vscode.lm.registerTool('misatay_createTask', {
 		async invoke(options, token) {
 			const { title, description, status } = options.input as { 
 				title: string; 
@@ -35,7 +35,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 	});
 
 	// Register updateTask tool
-	const updateTaskTool = vscode.lm.registerTool('misetay_updateTask', {
+	const updateTaskTool = vscode.lm.registerTool('misatay_updateTask', {
 		async invoke(options, token) {
 			const { id, updates } = options.input as { 
 				id: string; 
@@ -63,7 +63,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 	});
 
 	// Register listTasks tool
-	const listTasksTool = vscode.lm.registerTool('misetay_listTasks', {
+	const listTasksTool = vscode.lm.registerTool('misatay_listTasks', {
 		async invoke(options, token) {
 			const filters = options.input as { status?: TaskStatus } | undefined;
 
@@ -87,7 +87,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 	});
 
 	// Register addDependency tool
-	const addDependencyTool = vscode.lm.registerTool('misetay_addDependency', {
+	const addDependencyTool = vscode.lm.registerTool('misatay_addDependency', {
 		async invoke(options, token) {
 			const { childId, parentId } = options.input as { 
 				childId: string; 
@@ -115,7 +115,7 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 	});
 
 	// Register backendInfo tool
-	const backendInfoTool = vscode.lm.registerTool('misetay_backendInfo', {
+	const backendInfoTool = vscode.lm.registerTool('misatay_backendInfo', {
 		async invoke(options, token) {
 			const info = getBackend().backendInfo();
 			return new vscode.LanguageModelToolResult([
@@ -131,12 +131,12 @@ export function registerTaskTools(context: vscode.ExtensionContext, getBackend: 
 	});
 
 	context.subscriptions.push(createTaskTool, updateTaskTool, listTasksTool, addDependencyTool, backendInfoTool);
-	console.log('Misetay: Registered 5 task management tools');
+	console.log('Misatay: Registered 5 task management tools');
 	
 	// List all available tools to verify registration
 	setTimeout(() => {
 		const toolNames = vscode.lm.tools.map(t => t.name);
 		console.log('All available LM tools:', toolNames);
-		console.log('Misetay tools found:', toolNames.filter(n => n.startsWith('misetay_')));
+		console.log('Misatay tools found:', toolNames.filter(n => n.startsWith('misatay_')));
 	}, 1000);
 }
