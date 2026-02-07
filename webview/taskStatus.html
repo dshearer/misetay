@@ -11,6 +11,7 @@
 			--status-committed: var(--vscode-charts-green);
 			--status-blocked: var(--vscode-charts-orange);
 			--status-reviewed: var(--vscode-charts-purple);
+			--status-needs-help: var(--vscode-charts-orange);
 		}
 	
 		* {
@@ -48,6 +49,7 @@
 		.task-card.blocked { border-left-color: var(--status-blocked); }
 		.task-card.committed { border-left-color: var(--status-committed); }
 		.task-card.reviewed { border-left-color: var(--status-reviewed); }
+		.task-card.needs_help { border-left-color: var(--status-needs-help); }
 
 		.task-header {
 			display: flex;
@@ -101,6 +103,10 @@
 		.task-status.reviewed {
 			background: color-mix(in srgb, var(--status-reviewed) 20%, transparent);
 			color: var(--status-reviewed);
+		}
+		.task-status.needs_help {
+			background: color-mix(in srgb, var(--status-needs-help) 20%, transparent);
+			color: var(--status-needs-help);
 		}
 
 		.task-description {

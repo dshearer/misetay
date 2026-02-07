@@ -20,7 +20,7 @@ Use this skill when:
 1. **List tasks** - Use `dshearer.misatay/listTasks` to see what needs to be done
 2. **Identify next task** - Find tasks with status "ready" (all dependencies satisfied)
 
-**IMPORTANT**: The git repo should not have uncommited changes. If it does, STOP and ask the user what to do.
+**IMPORTANT**: The git repo should not have uncommitted changes. If it does, STOP and tell the user — do not begin any task implementation until the working tree is clean.
 
 ## Task Execution Loop
 
@@ -144,6 +144,12 @@ If user asks about branches or if you're on main/master:
 
 ## Important Principles
 
+### Never Ask Questions While Working on a Task
+- **Do not ask the user questions while implementing a task.** Work autonomously until the task is complete (or you need help).
+- Do not use `AskUserQuestion` or any interactive prompts during task implementation.
+- If you encounter a problem you cannot solve on your own, follow the steps in the [Requesting Help](#requesting-help) section — set the task to `needs_help` and move on to the next task.
+- You may communicate with the user *between* tasks (e.g., after completing a task to ask if they want to review or continue).
+
 ### One Task at a Time
 - Complete one full task before moving to the next
 - Don't mix changes from multiple tasks in one commit
@@ -171,6 +177,7 @@ If user asks about branches or if you're on main/master:
 
 ## Example Execution Flow
 
+### Normal flow
 ```
 User: "Start implementing the tasks"
 
@@ -201,6 +208,91 @@ You: [Check tasks with listTasks()]
 [Repeat loop...]
 ```
 
+### Getting stuck mid-task
+```
+You: [Working on bd-abc3 'Integrate payment gateway']
+[Read code, attempted implementation, but the task requires an API key format
+ that isn't documented anywhere in the codebase]
+
+[Update task description: "Needs help: Task requires payment gateway API key
+ format but none is documented in the codebase. Need to know the expected
+ key format and where credentials should be stored."]
+[Update status to needs_help]
+
+[Check tasks with listTasks()]
+"Task bd-abc4 'Add order confirmation page' is ready. Starting now..."
+
+[Continue with next task — do NOT ask the user about the API key]
+```
+
+## Requesting Help
+
+Sometimes you'll get stuck on a task. This is normal — don't keep struggling silently. Use the `needs_help` status to hand off to the user.
+
+### When to Request Help
+
+Set `needs_help` when:
+- The task description is too vague, contradictory, or doesn't fit with other tasks
+- You've made genuine effort but can't figure out how to implement the task
+- The task requires information or decisions that only the user can provide
+
+**This is a last resort.** Try to solve the problem yourself first. But don't waste time spinning your wheels — if you're stuck, say so.
+
+### How to Request Help
+
+Follow these steps in order:
+
+#### Step 1: Update the Task Description
+
+Use `dshearer.misatay/updateTask` to replace the task description with:
+- What you've done so far (if anything)
+- What specific help you need from the user
+- Why you're stuck
+
+```
+Use dshearer.misatay/updateTask:
+- taskId: the task ID
+- updates: { description: "Progress: <what was done>\n\nNeeds help: <what you need from the user>" }
+```
+
+#### Step 2: Commit Any Progress
+
+If you've made code changes, commit them before setting `needs_help`:
+
+```bash
+git add -A
+git commit -m "Partial progress on <task description> (task-id)"
+```
+
+If you haven't made any code changes, skip this step.
+
+#### Step 3: Set Status to needs_help
+
+```
+Use dshearer.misatay/updateTask:
+- taskId: the task ID
+- updates: { status: "needs_help" }
+```
+
+#### Step 4: Move to Next Task
+
+After setting `needs_help`, **don't stop**. Check for the next ready task and continue the execution loop:
+
+1. Check task list with `dshearer.misatay/listTasks`
+2. Find the next task with status "ready"
+3. If one exists, continue the execution loop
+4. If no ready tasks remain, notify the user:
+
+```
+"⚠️ Task <task-id> needs your help: <brief summary>
+
+No more ready tasks available. Here's what needs attention:
+- <task-id>: needs_help - <description>
+- <task-id>: committed - ready for review
+
+Let me know how you'd like to proceed."
+```
+
 ## Handling Edge Cases
 
 ### What if `git add -A` stages unwanted files?
@@ -210,13 +302,12 @@ You: [Check tasks with listTasks()]
 
 ### What if dependencies are circular?
 - This shouldn't happen if planning was done correctly
-- If detected, notify the user and ask how to proceed
-- Suggest breaking the circular dependency
+- If detected, notify the user and stop — do not attempt to resolve circular dependencies yourself
 
 ### What if all ready tasks have incomplete dependencies?
 - Notify the user that there are no ready tasks
 - List tasks and their blocking dependencies
-- Wait for user to resolve (maybe some need to be reviewed?)
+- Stop and let the user resolve (maybe some need to be reviewed?)
 
 ## Transitioning to Review
 
@@ -230,6 +321,7 @@ Don't duplicate review logic here - defer to the Review Skill.
 
 ## Key Reminders
 
+- **No questions during a task** - Never ask the user questions while implementing a task; use `needs_help` if stuck
 - **One task at a time** - Complete current task before moving to next
 - **Check dependencies** - Never start a task with incomplete dependencies
 - **Update status** - Mark in_progress when starting, committed when done

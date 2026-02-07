@@ -56,6 +56,8 @@ export class BeadsBackend implements TaskBackend {
 				return { status: 'closed', label: 'committed' };
 			case 'reviewed':
 				return { status: 'closed', label: 'reviewed' };
+			case 'needs_help':
+				return { status: 'open', label: 'needs_help' };
 		}
 	}
 
@@ -78,7 +80,11 @@ export class BeadsBackend implements TaskBackend {
 		if (beadsStatus === 'blocked') {
 			return 'blocked';
 		}
-		// open, deferred map to ready
+		// open with needs_help label
+		if (labels?.includes('needs_help')) {
+			return 'needs_help';
+		}
+		// open, deferred, blocked map to ready
 		return 'ready';
 	}
 
@@ -142,8 +148,8 @@ export class BeadsBackend implements TaskBackend {
 					throw new Error(`Cannot start task ${id}: task is blocked by incomplete dependencies`);
 				}
 
-				// Remove old committed/reviewed labels
-				for (const label of ['committed', 'reviewed']) {
+				// Remove old status labels
+				for (const label of ['committed', 'reviewed', 'needs_help']) {
 					if (current.labels?.includes(label)) {
 						await execFileAsync(bdPath, ['label', 'remove', id, label], {
 							cwd: this.workspaceRoot

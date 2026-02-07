@@ -24,6 +24,24 @@ out of your repo.)
 
 You are now ready to follow [The Misatay Way](#the-misatay-way).
 
+## Recommended Settings
+
+To get the best experience with Misatay, we recommend configuring the following VS Code setting:
+
+### Auto Accept Delay
+
+**Setting**: `copilot.agent.autoAcceptDelay`  
+**Recommended value**: Greater than 0 (e.g., 5-10 seconds)
+
+This setting controls the delay (in seconds) after which changes made by the AI agent are automatically accepted. Setting this to 0 means auto-accept is disabled, which means you need to manually accept every change.
+
+We recommend setting this to a value greater than 0 to allow Misatay to work more efficiently. This gives you time to review changes while they're being made, but automatically accepts them after the delay if you don't intervene.
+
+To configure this setting:
+1. Open VS Code Settings (Cmd+, or Ctrl+,)
+2. Search for "copilot.agent.autoAcceptDelay"
+3. Set the value to your preferred delay (e.g., 5)
+
 ## Project Status
 
 This is an _experiment_, although I do try to make Misatay useful for real work.
